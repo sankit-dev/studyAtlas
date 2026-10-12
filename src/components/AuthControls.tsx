@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { authClient } from "../lib/auth";
+import { apiFetch, readJson } from "../lib/api";
 
 type SocialProvider = "github";
 
@@ -7,7 +8,6 @@ type AuthProvidersResponse = {
   providers?: Partial<Record<SocialProvider, boolean>>;
 };
 
-const apiOrigin = import.meta.env.VITE_API_ORIGIN ?? "http://localhost:4000";
 const providerLabels: Record<SocialProvider, string> = {
   github: "GitHub",
 };
@@ -72,7 +72,8 @@ export function AuthControls() {
 
     async function loadProviders() {
       try {
-        const response = await fetch(`${apiOrigin}/api/auth/providers`, {
+        const response = await apiFetch('/api/auth/providers', {
+          credentials: 'omit',
           signal: AbortSignal.timeout(1500),
         });
 
@@ -80,7 +81,7 @@ export function AuthControls() {
           throw new Error("Unable to load auth providers");
         }
 
-        const data = (await response.json()) as AuthProvidersResponse;
+        const data = await readJson<AuthProvidersResponse>(response);
         const providers: SocialProvider[] = [];
 
         if (data.providers?.github) {

@@ -1,4 +1,4 @@
-const apiOrigin = import.meta.env.VITE_API_ORIGIN ?? 'http://localhost:4000'
+import { apiFetch, jsonRequest, readJson } from './api'
 
 export type DsaProgressOutcome = 'solved' | 'guided' | 'review'
 
@@ -30,15 +30,13 @@ function parseProgressRecords(data: DsaProgressResponse): DsaProgressRecord[] {
 }
 
 export async function fetchDsaProgress(): Promise<DsaProgressRecord[]> {
-  const response = await fetch(`${apiOrigin}/api/dsa/progress`, {
-    credentials: 'include',
-  })
+  const response = await apiFetch('/api/dsa/progress')
 
   if (!response.ok) {
     throw new Error('Unable to fetch DSA progress')
   }
 
-  return parseProgressRecords((await response.json()) as DsaProgressResponse)
+  return parseProgressRecords(await readJson<DsaProgressResponse>(response))
 }
 
 export async function syncDsaProgress(
@@ -52,55 +50,45 @@ export async function syncDsaProgress(
     ...data,
   }))
 
-  const response = await fetch(`${apiOrigin}/api/dsa/progress/sync`, {
-    body: JSON.stringify({ progress }),
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    method: 'POST',
-  })
+  const response = await apiFetch(
+    '/api/dsa/progress/sync',
+    jsonRequest({ progress }, { method: 'POST' }),
+  )
 
   if (!response.ok) {
     throw new Error('Unable to sync DSA progress')
   }
 
-  return parseProgressRecords((await response.json()) as DsaProgressResponse)
+  return parseProgressRecords(await readJson<DsaProgressResponse>(response))
 }
 
 export async function markDsaQuestOutcome(
   questId: string,
   outcome: DsaProgressOutcome,
 ): Promise<DsaProgressRecord> {
-  const response = await fetch(
-    `${apiOrigin}/api/dsa/progress/${encodeURIComponent(questId)}`,
-    {
-      body: JSON.stringify({ outcome }),
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-      method: 'PUT',
-    },
+  const response = await apiFetch(
+    `/api/dsa/progress/${encodeURIComponent(questId)}`,
+    jsonRequest({ outcome }, { method: 'PUT' }),
   )
 
   if (!response.ok) {
     throw new Error('Unable to save DSA quest outcome')
   }
 
-  return (await response.json()) as DsaProgressRecord
+  return readJson<DsaProgressRecord>(response)
 }
 
 export async function markDsaReviewComplete(
   questId: string,
 ): Promise<DsaProgressRecord> {
-  const response = await fetch(
-    `${apiOrigin}/api/dsa/progress/${encodeURIComponent(questId)}/review`,
-    {
-      credentials: 'include',
-      method: 'PUT',
-    },
+  const response = await apiFetch(
+    `/api/dsa/progress/${encodeURIComponent(questId)}/review`,
+    { method: 'PUT' },
   )
 
   if (!response.ok) {
     throw new Error('Unable to advance DSA review step')
   }
 
-  return (await response.json()) as DsaProgressRecord
+  return readJson<DsaProgressRecord>(response)
 }

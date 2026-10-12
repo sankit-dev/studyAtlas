@@ -5,72 +5,6 @@
    the DSA course and auth controls.
    ========================================================================== */
 
-:root {
-  /* Indigo ink on warm paper — taken from the hero artwork. */
-  --paper-50: #fffdf6;
-  --paper-100: #f8f2e4;
-  --paper-200: #f1ead9;
-  --paper-300: #e4d9c2;
-  --rule: #dbcfb4;
-  --ink-300: #9aa1b4;
-  --ink-500: #5b6478;
-  --ink-700: #2c3550;
-  --ink-900: #1a2138;
-  --indigo-700: #1d3265;
-  --indigo-600: #26417e;
-  --indigo-500: #35539c;
-  --indigo-200: #b9c6ec;
-  --moss-600: #4d7a55;
-
-  --color-page: var(--paper-200);
-  --color-surface: var(--paper-50);
-  --color-text: var(--ink-900);
-  --color-muted: var(--ink-500);
-  --color-line: var(--rule);
-  --color-soft-line: color-mix(in srgb, var(--rule) 58%, transparent);
-  --color-shadow: #d7caad;
-  --color-accent: var(--indigo-600);
-  --color-accent-strong: var(--indigo-600);
-  --color-accent-muted: color-mix(in srgb, var(--indigo-600) 72%, var(--ink-500));
-  --color-focus-ring: color-mix(in srgb, var(--indigo-600) 18%, transparent);
-  --color-inverse-bg: var(--ink-900);
-  --color-inverse-text: var(--paper-100);
-  --color-inverse-muted: #a9afc0;
-
-  /* One accent, not a rainbow. */
-  --track-coral: var(--indigo-600);
-  --track-blue: var(--indigo-600);
-  --track-yellow: var(--indigo-600);
-  --track-green: var(--moss-600);
-  --track-violet: var(--indigo-600);
-
-  --font-display: 'Newsreader', Georgia, 'Times New Roman', serif;
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-
-:root.dark {
-  --color-page: #0f1730;
-  --color-surface: #151f3a;
-  --color-text: #efe8d6;
-  --color-muted: #99a2b8;
-  --color-line: #2a3552;
-  --color-soft-line: #202a44;
-  --color-shadow: #050912;
-  --color-accent: #9db2f0;
-  --color-accent-strong: #a9bdf5;
-  --color-accent-muted: color-mix(in srgb, #a9bdf5 60%, var(--ink-300));
-  --color-focus-ring: color-mix(in srgb, #a9bdf5 16%, transparent);
-  --color-inverse-bg: #efe8d6;
-  --color-inverse-text: #101830;
-  --color-inverse-muted: #5b6478;
-  --track-coral: #a9bdf5;
-  --track-blue: #a9bdf5;
-  --track-yellow: #a9bdf5;
-  --track-green: #8fc39b;
-  --track-violet: #a9bdf5;
-}
-
 /* ── Base ─────────────────────────────────────────────────────────────── */
 
 body {
@@ -92,7 +26,6 @@ h2 {
 
 /* Kill the ALL-CAPS mono eyebrow tell across the whole app. */
 .kicker,
-.card-label,
 .eyebrow {
   font-family: var(--font-sans);
   font-size: 13px;
@@ -104,10 +37,6 @@ h2 {
 .kicker {
   margin: 0 0 14px;
   color: var(--color-muted);
-}
-
-.font-serif {
-  font-family: var(--font-display);
 }
 
 .font-mono {
@@ -130,15 +59,38 @@ h2 {
   padding: 16px 0;
 }
 
+.site-header-nav > a:first-child {
+  justify-self: start;
+}
+
+.site-header-actions {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: 12px;
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
 .site-header-links {
+  display: flex;
+  align-items: center;
   margin-right: auto;
   gap: 24px;
 }
 
 .site-nav-link {
+  position: relative;
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
   color: var(--color-muted);
   font-size: 14px;
   font-weight: 400;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease;
 }
 
 .site-nav-link:hover,
@@ -147,52 +99,19 @@ h2 {
 }
 
 .site-nav-link[data-active='true']::after {
+  content: '';
+  position: absolute;
+  right: 0;
   bottom: 2px;
+  left: 0;
   height: 1px;
   background: currentColor;
   opacity: 0.5;
 }
 
-.site-header-donate {
-  display: inline-flex;
-  height: 34px;
-  flex: 0 0 auto;
+.site-header-auth {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 7px;
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
-  background: transparent;
-  padding: 0 11px;
-  color: var(--color-muted);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color 160ms var(--motion-ease), border-color 160ms var(--motion-ease),
-    background-color 160ms var(--motion-ease), transform 160ms var(--motion-ease);
-}
-
-.site-header-donate svg {
-  color: var(--color-accent-strong);
-}
-
-.site-header-donate:hover,
-.site-header-donate:focus-visible {
-  border-color: color-mix(in srgb, var(--color-accent-strong) 55%, var(--color-line));
-  background: color-mix(in srgb, var(--color-accent-strong) 12%, transparent);
-  color: var(--color-accent-text);
-  transform: none;
-}
-
-@media (max-width: 640px) {
-  .site-header-donate {
-    width: 34px;
-    padding: 0;
-  }
-
-  .site-header-donate span {
-    display: none;
-  }
 }
 
 .theme-toggle {
@@ -218,18 +137,29 @@ h2 {
 /* ── Buttons ──────────────────────────────────────────────────────────── */
 
 .button-link {
+  position: relative;
+  overflow: hidden;
   min-height: 46px;
   border-radius: 999px;
   padding: 0 22px;
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
+  transition:
+    background 200ms ease,
+    color 200ms ease,
+    opacity 200ms ease;
+}
+
+.button-link:hover {
+  opacity: 0.82;
 }
 
 .button-link--accent {
   border: 1px solid var(--color-accent-strong);
   background: var(--color-accent-strong);
   color: #fff;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--color-accent-strong) 25%, transparent);
 }
 
 .button-link--accent:hover {
@@ -242,6 +172,11 @@ h2 {
   color: var(--color-inverse-text);
 }
 
+.button-link--light {
+  background: var(--color-inverse-text);
+  color: var(--color-inverse-bg);
+}
+
 .btn-arrow {
   position: relative;
   top: -1px;
@@ -252,6 +187,8 @@ h2 {
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 
 .page-hero-bg {
+  position: relative;
+  isolation: isolate;
   --color-text: #ededed;
   --color-muted: #a1a1a1;
   --color-surface: #111111;
@@ -277,6 +214,11 @@ h2 {
       rgb(0 0 0 / 0) 100%
     ),
     transparent;
+}
+
+.page-hero-bg > * {
+  position: relative;
+  z-index: 0;
 }
 
 .page-hero-bg a.button-link.button-link--accent {
@@ -424,22 +366,6 @@ h2 {
   transform: scale(0.97);
 }
 
-.hero__progress-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--color-text);
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
-  text-underline-offset: 5px;
-}
-
-.hero__progress-link:hover {
-  text-decoration-color: currentColor;
-}
-
 /* ── Roadmap ──────────────────────────────────────────────────────────── */
 
 .roadmap {
@@ -477,6 +403,7 @@ h2 {
   gap: 22px;
   border-top: 1px solid var(--color-soft-line);
   padding: 22px 0;
+  transition: color 180ms var(--motion-ease);
 }
 
 .roadmap-step:first-child {
@@ -1964,7 +1891,6 @@ h2 {
   .support-card__cta,
   .support-card__amounts button,
   .support-inline__cta,
-  .site-header-donate,
   .donate-presets button,
   .donate-submit,
   .donate-close {
@@ -1974,7 +1900,6 @@ h2 {
   .support-card__cta:hover,
   .support-card__amounts button:hover,
   .support-inline__cta:hover,
-  .site-header-donate:hover,
   .donate-presets button:hover,
   .donate-submit:hover:not(:disabled) {
     transform: none;

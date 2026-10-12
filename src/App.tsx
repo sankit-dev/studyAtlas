@@ -30,6 +30,7 @@ import {
   getOverallProgress,
 } from './data/learningPath'
 import { authClient } from './lib/auth'
+import { useRoute } from './hooks/useRoute'
 import {
   fetchCompletedNoteSlugs,
   markNoteComplete,
@@ -39,7 +40,6 @@ import {
   getBooksRoute,
   getDsaQuestIdFromPath,
   getNoteSlugFromPath,
-  getPathname,
   isDsaPath,
   isLibraryPath,
   navigateTo,
@@ -94,14 +94,6 @@ function getInitialCompletedNotes() {
   }
 }
 
-function getInitialPathname() {
-  if (typeof window === 'undefined') {
-    return '/'
-  }
-
-  return redirectLegacyHash() ?? getPathname()
-}
-
 function scrollToPageTop() {
   document.documentElement.scrollTop = 0
   document.body.scrollTop = 0
@@ -115,7 +107,9 @@ type NoteNavigationOptions = {
 function App() {
   const { data: session } = authClient.useSession()
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
-  const [pathname, setPathname] = useState(getInitialPathname)
+  redirectLegacyHash()
+  const activePath = useRoute()
+  const pathname = activePath.split('?')[0]
   const [completedNoteSlugs, setCompletedNoteSlugs] = useState(
     getInitialCompletedNotes,
   )
@@ -217,18 +211,6 @@ function App() {
       JSON.stringify([...completedNoteSlugs]),
     )
   }, [completedNoteSlugs])
-
-  useEffect(() => {
-    const syncRoute = () => {
-      // Catch legacy #/ links pasted/bookmarked after initial load.
-      const legacy = redirectLegacyHash()
-      setPathname(legacy ?? getPathname())
-    }
-
-    window.addEventListener('popstate', syncRoute)
-
-    return () => window.removeEventListener('popstate', syncRoute)
-  }, [])
 
   // SPA navigation for same-origin <a href="/notes/..."> clicks.
   // Keeps crawlable hrefs while avoiding full page reloads.
@@ -367,6 +349,7 @@ function App() {
           <BooksApp
             header={
               <Header
+                activePath={activePath}
                 theme={theme}
                 onThemeToggle={() =>
                   setTheme((currentTheme) =>
@@ -388,6 +371,7 @@ function App() {
     <PageShell variant={isDsa ? 'dsa' : 'default'}>
       {!isLanding && (
         <Header
+          activePath={activePath}
           theme={theme}
           onThemeToggle={() =>
             setTheme((currentTheme) =>
@@ -425,6 +409,7 @@ function App() {
         <>
           <div className="page-hero-bg">
             <Header
+              activePath={activePath}
               theme={theme}
               onThemeToggle={() =>
                 setTheme((currentTheme) =>

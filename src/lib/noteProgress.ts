@@ -1,4 +1,4 @@
-const apiOrigin = import.meta.env.VITE_API_ORIGIN ?? 'http://localhost:4000'
+import { apiFetch, jsonRequest, readJson } from './api'
 
 type NoteProgressSyncResponse = {
   completedNoteSlugs?: unknown
@@ -13,43 +13,34 @@ function getCompletedNoteSlugs(data: NoteProgressSyncResponse) {
 }
 
 export async function fetchCompletedNoteSlugs() {
-  const response = await fetch(`${apiOrigin}/api/notes/progress`, {
-    credentials: 'include',
-  })
+  const response = await apiFetch('/api/notes/progress')
 
   if (!response.ok) {
     throw new Error('Unable to fetch note progress')
   }
 
-  return getCompletedNoteSlugs((await response.json()) as NoteProgressSyncResponse)
+  return getCompletedNoteSlugs(await readJson<NoteProgressSyncResponse>(response))
 }
 
 export async function syncCompletedNoteSlugs(completedNoteSlugs: Iterable<string>) {
-  const response = await fetch(`${apiOrigin}/api/notes/progress/sync`, {
-    body: JSON.stringify({
+  const response = await apiFetch(
+    '/api/notes/progress/sync',
+    jsonRequest({
       completedNoteSlugs: [...completedNoteSlugs],
-    }),
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    method: 'POST',
-  })
+    }, { method: 'POST' }),
+  )
 
   if (!response.ok) {
     throw new Error('Unable to sync note progress')
   }
 
-  return getCompletedNoteSlugs((await response.json()) as NoteProgressSyncResponse)
+  return getCompletedNoteSlugs(await readJson<NoteProgressSyncResponse>(response))
 }
 
 export async function markNoteComplete(noteSlug: string) {
-  const response = await fetch(
-    `${apiOrigin}/api/notes/progress/${encodeURIComponent(noteSlug)}`,
-    {
-      credentials: 'include',
-      method: 'PUT',
-    },
+  const response = await apiFetch(
+    `/api/notes/progress/${encodeURIComponent(noteSlug)}`,
+    { method: 'PUT' },
   )
 
   if (!response.ok) {

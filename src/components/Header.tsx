@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { AuthControls } from './AuthControls'
 import { Brand } from './Brand'
 
@@ -9,26 +8,13 @@ const navigationLinks = [
 ] as const
 
 type HeaderProps = {
+  activePath: string
   onThemeToggle: () => void
   theme: 'light' | 'dark'
 }
 
-export function Header({ onThemeToggle, theme }: HeaderProps) {
+export function Header({ activePath, onThemeToggle, theme }: HeaderProps) {
   const isDark = theme === 'dark'
-  const [activePath, setActivePath] = useState(() =>
-    typeof window === 'undefined'
-      ? '/'
-      : window.location.pathname + window.location.search,
-  )
-
-  useEffect(() => {
-    const syncActivePath = () =>
-      setActivePath(window.location.pathname + window.location.search)
-
-    window.addEventListener('popstate', syncActivePath)
-
-    return () => window.removeEventListener('popstate', syncActivePath)
-  }, [])
 
   const getIsActive = (href: string) => {
     if (href === '/library') {

@@ -99,23 +99,6 @@ html:not(.dark) .bk-root {
   background: var(--bk-primary-hover);
 }
 
-.bk-btn--ghost {
-  background: transparent;
-  color: var(--bk-text);
-  border-color: var(--bk-hover);
-}
-
-.bk-btn--ghost:hover {
-  border-color: var(--bk-dim);
-}
-
-.bk-btn--sm {
-  min-height: 36px;
-  padding: 6px 14px;
-  font-size: 14px;
-  font-weight: 500;
-}
-
 .bk-btn--block {
   display: flex;
   width: 100%;

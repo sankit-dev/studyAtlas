@@ -1,4 +1,4 @@
-const apiOrigin = import.meta.env.VITE_API_ORIGIN ?? 'http://localhost:4000'
+import { apiFetch, jsonRequest, readJson, readOptionalJson } from './api'
 
 export const donationCurrency = String(
   import.meta.env.VITE_DONATION_CURRENCY ?? 'USD',
@@ -45,20 +45,14 @@ export async function createDonationCheckout(
   couponCode?: string,
 ) {
   const trimmedCoupon = couponCode?.trim()
-  const response = await fetch(`${apiOrigin}/api/donations`, {
-    body: JSON.stringify({
+  const response = await apiFetch(
+    '/api/donations',
+    jsonRequest({
       amountCents,
       ...(trimmedCoupon ? { couponCode: trimmedCoupon } : {}),
-    }),
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    method: 'POST',
-  })
-  const data = (await response
-    .json()
-    .catch(() => null)) as DonationCheckoutResponse | null
+    }, { method: 'POST' }),
+  )
+  const data = await readOptionalJson<DonationCheckoutResponse>(response)
 
   if (!response.ok || typeof data?.checkoutUrl !== 'string') {
     throw new Error(
@@ -80,9 +74,7 @@ export type DonationStatus = {
 }
 
 export async function fetchDonationStatus(): Promise<DonationStatus | null> {
-  const response = await fetch(`${apiOrigin}/api/donations/me`, {
-    credentials: 'include',
-  })
+  const response = await apiFetch('/api/donations/me')
 
   if (response.status === 401) {
     return null
@@ -92,7 +84,7 @@ export async function fetchDonationStatus(): Promise<DonationStatus | null> {
     throw new Error('Unable to load donation status')
   }
 
-  const data = (await response.json()) as Partial<DonationStatus>
+  const data = await readJson<Partial<DonationStatus>>(response)
 
   return {
     hasDonated: data.hasDonated === true,

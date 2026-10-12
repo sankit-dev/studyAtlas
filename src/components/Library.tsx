@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { Note, Track } from '../data/tracks'
 import { getTrackProgress } from '../data/learningPath'
 import { flattenNotes, tracks } from '../data/tracks'
 import { useReducedMotion } from '../hooks/useReducedMotion'
+import { useRoute } from '../hooks/useRoute'
+import { replaceRoute } from '../lib/router'
 import {
   fadeIn,
   fadeUp,
@@ -79,10 +81,6 @@ function getTrackSearchText(track: Track) {
     .toLowerCase()
 }
 
-const readReviseFromUrl = () =>
-  typeof window !== 'undefined' &&
-  new URLSearchParams(window.location.search).get('view') === 'revise'
-
 const getMustKnowNotes = (track: Track) =>
   flattenNotes(track.topics).filter((note) => note.priority === 'Must Know')
 
@@ -93,26 +91,15 @@ type LibraryProps = {
 export function Library({ completedNoteSlugs }: LibraryProps) {
   const reducedMotion = useReducedMotion()
   const motionConfig = motionProps(reducedMotion)
-  const [mustKnowOnly, setMustKnowOnly] = useState(readReviseFromUrl)
+  const route = useRoute()
+  const mustKnowOnly =
+    new URLSearchParams(route.split('?')[1] ?? '').get('view') === 'revise'
   const [query, setQuery] = useState('')
-
-  useEffect(() => {
-    const syncFromUrl = () => setMustKnowOnly(readReviseFromUrl())
-
-    window.addEventListener('popstate', syncFromUrl)
-
-    return () => window.removeEventListener('popstate', syncFromUrl)
-  }, [])
 
   const selectMode = (revise: boolean) => {
     if (revise === mustKnowOnly) return
 
-    window.history.replaceState(
-      null,
-      '',
-      revise ? '/library?view=revise' : '/library',
-    )
-    window.dispatchEvent(new PopStateEvent('popstate'))
+    replaceRoute(revise ? '/library?view=revise' : '/library')
     setExpandedTrack(null)
   }
   const [activeBranch, setActiveBranch] = useState<string>(allBranchLabel)

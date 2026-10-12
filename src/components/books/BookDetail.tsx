@@ -22,7 +22,7 @@ export function BookDetail({ book }: { book: Book }) {
   const startChapter = progress?.chapter ?? 1
 
   return (
-    <BooksLayout grid>
+    <BooksLayout sky>
       <main className="bk-main bk-main--detail">
         <a className="bk-back" href="/books">
           <ChevronLeftIcon size={16} />

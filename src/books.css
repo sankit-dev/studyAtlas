@@ -74,20 +74,6 @@ html:not(.dark) .bk-root {
   font-variant-numeric: tabular-nums;
 }
 
-/* Faint grid behind the top of browse pages only. */
-.bk-grid {
-  position: absolute;
-  inset: 0 0 auto;
-  height: 620px;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, var(--bk-grid-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--bk-grid-line) 1px, transparent 1px);
-  background-size: 56px 56px;
-  background-position: center top;
-  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 30%, transparent 75%);
-  mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 30%, transparent 75%);
-}
 
 /* ── Buttons and type ───────────────────────────────────────────────── */
 

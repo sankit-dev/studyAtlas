@@ -25,7 +25,7 @@ export function PricingPage() {
   }
 
   return (
-    <BooksLayout grid>
+    <BooksLayout sky>
       <main className="bk-main bk-main--center">
         <h1 className="bk-h1 bk-center bk-enter" style={enterDelay(0)}>One plan. Every book.</h1>
 

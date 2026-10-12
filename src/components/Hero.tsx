@@ -123,27 +123,6 @@ export function Hero({
           transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1], delay: 0.3 }}
         >
           <HeroConstellation steps={pathSteps} />
-          <div className="hero__path-info">
-            <p className="hero__path-head">
-              <span>Your path</span>
-              <span>
-                {overallProgress.completedCount} / {overallProgress.totalCount}{' '}
-                understood
-              </span>
-            </p>
-            <p className="hero__path-track">{currentStep.track.title}</p>
-            <p className="hero__path-note">
-              {continueNote
-                ? `Up next: ${continueNote.title}`
-                : 'Every track understood. Nice work.'}
-            </p>
-            {continueNote && (
-              <a className="hero__progress-link" href={`/notes/${continueNote.slug}`}>
-                Continue
-                <span aria-hidden="true">→</span>
-              </a>
-            )}
-          </div>
         </motion.aside>
       </section>
     </Wrap>

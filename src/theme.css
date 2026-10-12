@@ -204,36 +204,6 @@ body {
   gap: 8px;
 }
 
-.hero__path-info {
-  padding-left: 6px;
-}
-
-.hero__path-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  margin: 0;
-  color: var(--color-muted);
-  font-size: 12.5px;
-  font-variant-numeric: tabular-nums;
-}
-
-.hero__path-track {
-  margin: 10px 0 0;
-  font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.015em;
-}
-
-.hero__path-note {
-  margin: 6px 0 14px;
-  color: var(--color-muted);
-  font-size: 14px;
-  line-height: 1.5;
-}
-
 .hero-constellation {
   display: block;
   width: 100%;
@@ -379,3 +349,79 @@ body {
   letter-spacing: -0.015em;
 }
 
+
+/* ── Night sky: the brand motif on every tab's header ─────────────────────── */
+
+.night-sky {
+  display: block;
+  height: auto;
+  pointer-events: none;
+}
+
+.night-sky__star {
+  fill: var(--color-text);
+}
+
+.night-sky__moon {
+  fill: var(--color-text);
+  opacity: 0.85;
+}
+
+.night-sky__trail {
+  stroke: var(--color-line);
+  stroke-width: 1;
+}
+
+.library {
+  position: relative;
+}
+
+.library > *:not(.night-sky) {
+  position: relative;
+  z-index: 1;
+}
+
+.night-sky--page {
+  position: absolute;
+  top: clamp(20px, 4vw, 48px);
+  right: 0;
+  z-index: 0;
+  width: min(420px, 42vw);
+}
+
+.bk-sky {
+  position: relative;
+  max-width: 1200px;
+  height: 0;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.bk-sky .night-sky--page {
+  right: 40px;
+}
+
+.bk-root main {
+  position: relative;
+  z-index: 1;
+}
+
+.night-sky--dsa {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  z-index: 0;
+  width: min(380px, 40vw);
+}
+
+@media (max-width: 760px) {
+  .night-sky--page,
+  .night-sky--dsa {
+    width: 200px;
+    top: 12px;
+  }
+
+  .bk-sky .night-sky--page {
+    right: 16px;
+  }
+}

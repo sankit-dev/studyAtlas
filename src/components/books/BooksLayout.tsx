@@ -1,16 +1,21 @@
 import { useContext, type PropsWithChildren } from 'react'
+import { NightSky } from '../NightSky'
 import { BooksHeaderContext } from './headerContext'
 
 type BooksLayoutProps = PropsWithChildren<{
-  grid?: boolean
+  sky?: boolean
 }>
 
-export function BooksLayout({ grid = false, children }: BooksLayoutProps) {
+export function BooksLayout({ sky = false, children }: BooksLayoutProps) {
   const header = useContext(BooksHeaderContext)
   return (
     <div className="bk-root">
-      {grid && <div aria-hidden="true" className="bk-grid" />}
       <div className="bk-site-header">{header}</div>
+      {sky && (
+        <div className="bk-sky">
+          <NightSky className="night-sky--page" variant="books" />
+        </div>
+      )}
       {children}
     </div>
   )

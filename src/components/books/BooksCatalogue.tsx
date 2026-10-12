@@ -37,7 +37,7 @@ export function BooksCatalogue() {
     filter === 'all' ? books : books.filter((book) => book.category === filter)
 
   return (
-    <BooksLayout grid>
+    <BooksLayout sky>
       <main className="bk-main">
         <section className="bk-intro bk-enter" style={enterDelay(0)}>
           <h1 className="bk-h1">Books for engineering interviews</h1>

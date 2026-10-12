@@ -14,6 +14,7 @@ import {
   markDsaReviewComplete,
   syncDsaProgress,
 } from '../lib/dsaProgress'
+import { NightSky } from './NightSky'
 import { Wrap } from './PageShell'
 
 type ProgressOutcome = 'solved' | 'guided' | 'review'
@@ -328,6 +329,7 @@ export function DsaCourse({ activeQuestId, onNavigateQuest }: DsaCourseProps) {
     <main className="dsa-course" id="dsa">
       <Wrap>
         <section className="dsa-hero" aria-labelledby="dsa-title">
+          <NightSky className="night-sky--dsa" variant="dsa" />
           <div className="dsa-hero__copy">
             <a className="dsa-crumb" href="#top">
               Learning Atlas <span aria-hidden="true">/</span> DSA garden

@@ -11,6 +11,7 @@ import {
   staggerContainer,
   viewportOnce,
 } from './motion'
+import { NightSky } from './NightSky'
 import { Wrap } from './PageShell'
 import { RevisionView } from './RevisionView'
 
@@ -156,6 +157,7 @@ export function Library({ completedNoteSlugs }: LibraryProps) {
   return (
     <Wrap>
       <section className="library" id="library">
+        <NightSky className="night-sky--page" variant="library" />
         <motion.header
           className="library__header"
           initial={reducedMotion ? false : 'hidden'}

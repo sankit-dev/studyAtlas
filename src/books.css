@@ -3,7 +3,7 @@
    Everything is scoped under .bk-root / .bk-reader so the rest of the site is
    untouched. */
 
-html.dark:has(.bk-root) { background: #0a0a0a; }
+html.dark:has(.bk-root) { background: #0c0c0c; }
 html:not(.dark):has(.bk-root) { background: #fbfaf5; }
 html:has(.bk-reader[data-theme='dark']) { background: #0a0a0a; color-scheme: dark; }
 html:has(.bk-reader[data-theme='night']) { background: #000; color-scheme: dark; }
@@ -12,17 +12,17 @@ html:has(.bk-reader[data-theme='paper']) { background: #f4f1ea; color-scheme: li
 
 .bk-root,
 .bk-reader {
-  --bk-bg: #0a0a0a;
-  --bk-surface: #111111;
+  --bk-bg: #0c0c0c;
+  --bk-surface: #141414;
   --bk-line: #262626;
   --bk-line-soft: #1c1c1c;
   --bk-hover: #333333;
-  --bk-text: #ededed;
-  --bk-muted: #a1a1a1;
+  --bk-text: #d6d6d6;
+  --bk-muted: #9a9a9a;
   --bk-dim: #737373;
   --bk-hover-bg: #141414;
   --bk-raised: #1a1a1a;
-  --bk-primary-hover: #ffffff;
+  --bk-primary-hover: #e8e8e8;
   --bk-grid-line: rgba(255, 255, 255, 0.05);
 
   --hl-yellow: rgba(234, 179, 8, 0.34);
@@ -42,8 +42,8 @@ html:not(.dark) .bk-root {
   --bk-line: #e3e0d8;
   --bk-line-soft: #ece9e2;
   --bk-hover: #cfccc4;
-  --bk-text: #141414;
-  --bk-muted: #525252;
+  --bk-text: #262626;
+  --bk-muted: #5c5c5c;
   --bk-dim: #737373;
   --bk-hover-bg: #f0eee6;
   --bk-raised: #ece9e2;
@@ -645,7 +645,7 @@ html:not(.dark) .bk-root {
 
 .bk-reader {
   --r-bg: #0a0a0a;
-  --r-text: #e4e4e4;
+  --r-text: #d4d4d4;
   --r-muted: #a1a1a1;
   --r-dim: #737373;
   --r-line: #1f1f1f;

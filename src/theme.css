@@ -39,8 +39,8 @@
 
   --color-page: #fbfaf5;
   --color-surface: #f5f3ec;
-  --color-text: #141414;
-  --color-muted: #525252;
+  --color-text: #262626;
+  --color-muted: #5c5c5c;
   --color-line: #e3e0d8;
   --color-soft-line: #ece9e2;
   --color-shadow: #e3e0d8;
@@ -77,22 +77,22 @@
   --indigo-500: #d4d4d4;
   --moss-600: #ededed;
 
-  --color-page: #0a0a0a;
-  --color-surface: #111111;
-  --color-text: #ededed;
-  --color-muted: #a1a1a1;
+  --color-page: #0c0c0c;
+  --color-surface: #141414;
+  --color-text: #d6d6d6;
+  --color-muted: #9a9a9a;
   --color-line: #262626;
   --color-soft-line: #1c1c1c;
   --color-shadow: #000000;
-  --color-accent: #ededed;
-  --color-accent-strong: #ffffff;
-  --color-accent-text: #ededed;
+  --color-accent: #d6d6d6;
+  --color-accent-strong: #e8e8e8;
+  --color-accent-text: #d6d6d6;
   --color-accent-inverse: #0a0a0a;
   --color-accent-muted: #a1a1a1;
-  --color-success-text: #ededed;
+  --color-success-text: #d6d6d6;
   --color-focus-ring: rgb(255 255 255 / 0.14);
-  --color-inverse-bg: #ededed;
-  --color-inverse-text: #0a0a0a;
+  --color-inverse-bg: #d6d6d6;
+  --color-inverse-text: #0c0c0c;
   --color-inverse-muted: #525252;
 
   --track-coral: #ededed;
@@ -109,7 +109,7 @@ body {
 /* ── Home hero: the night artwork, desaturated ──────────────────────────── */
 
 .page-hero-bg {
-  --color-text: #ededed;
+  --color-text: #e2e2e2;
   --color-muted: #a1a1a1;
   --color-surface: #111111;
   --color-line: #333333;
@@ -118,7 +118,7 @@ body {
   --color-inverse-text: #0a0a0a;
   --color-inverse-muted: #525252;
   background:
-    radial-gradient(ellipse 66% 92% at 20% 72%, rgb(0 0 0 / 0.72) 0%, rgb(0 0 0 / 0.5) 48%, rgb(0 0 0 / 0) 82%),
+    radial-gradient(ellipse 70% 95% at 18% 62%, rgb(0 0 0 / 0.86) 0%, rgb(0 0 0 / 0.62) 50%, rgb(0 0 0 / 0) 85%),
     linear-gradient(180deg, rgb(0 0 0 / 0.35) 0%, rgb(0 0 0 / 0.45) 40%, rgb(0 0 0 / 0.4) 75%, rgb(0 0 0 / 0) 100%);
   background-color: #0a0a0a;
 }
@@ -126,17 +126,18 @@ body {
 .page-hero-bg::before {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -12px -12px 0;
   z-index: -2;
   background: url('/hero-night-bw.webp') center / cover no-repeat;
-  filter: brightness(0.5);
+  /* Soften the high-contrast rings (pattern glare) and keep the field dim. */
+  filter: brightness(0.36) contrast(0.78) blur(1.5px);
   pointer-events: none;
 }
 
 @media (min-aspect-ratio: 4/3) {
   .page-hero-bg {
     background:
-      radial-gradient(ellipse 66% 92% at 20% 72%, rgb(0 0 0 / 0.72) 0%, rgb(0 0 0 / 0.5) 48%, rgb(0 0 0 / 0) 82%),
+      radial-gradient(ellipse 70% 95% at 18% 62%, rgb(0 0 0 / 0.86) 0%, rgb(0 0 0 / 0.62) 50%, rgb(0 0 0 / 0) 85%),
       linear-gradient(180deg, rgb(0 0 0 / 0.35) 0%, rgb(0 0 0 / 0.45) 40%, rgb(0 0 0 / 0.4) 75%, rgb(0 0 0 / 0) 100%);
     background-color: #0a0a0a;
   }

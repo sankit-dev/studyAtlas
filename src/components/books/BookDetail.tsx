@@ -8,6 +8,7 @@ import {
 import { useBookAccess } from './access'
 import { BookCover } from './BookCover'
 import { BooksLayout } from './BooksLayout'
+import { enterDelay } from './motion'
 import { ChevronLeftIcon, LockIcon } from './icons'
 import { loadProgress } from './storage'
 
@@ -21,7 +22,7 @@ export function BookDetail({ book }: { book: Book }) {
   const startChapter = progress?.chapter ?? 1
 
   return (
-    <BooksLayout active="books" grid>
+    <BooksLayout grid>
       <main className="bk-main bk-main--detail">
         <a className="bk-back" href="/books">
           <ChevronLeftIcon size={16} />
@@ -29,14 +30,14 @@ export function BookDetail({ book }: { book: Book }) {
         </a>
 
         <section className="bk-detail">
-          <div className="bk-detail__cover">
+          <div className="bk-detail__cover bk-enter" style={enterDelay(0)}>
             <BookCover book={book} size="lg" />
             <a className="bk-btn bk-btn--primary bk-btn--block" href={chapterPath(book, startChapter)}>
               {progress ? 'Continue reading' : 'Start reading'}
             </a>
           </div>
 
-          <div className="bk-detail__body">
+          <div className="bk-detail__body bk-enter" style={enterDelay(1)}>
             <h1 className="bk-h1 bk-h1--detail">{book.title}</h1>
             <p className="bk-lede">{book.description}</p>
             <div className="bk-meta bk-num">

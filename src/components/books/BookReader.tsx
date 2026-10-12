@@ -24,6 +24,7 @@ import {
 } from './icons'
 import { ContentsDrawer, HighlightsDrawer, SettingsPanel } from './ReaderPanels'
 import { countWords, sampleBlocks } from './sampleChapter'
+import { useRevealOnScroll, useSmoothScroll } from './useReaderScroll'
 import {
   loadHighlights,
   loadPrefs,
@@ -114,6 +115,7 @@ export function BookReader({ book, chapterNumber }: BookReaderProps) {
   const [position, setPosition] = useState(0)
   const articleRef = useRef<HTMLElement>(null)
   const settingsRef = useRef<HTMLDivElement>(null)
+  const lenisRef = useSmoothScroll(panel === 'contents' || panel === 'highlights')
 
   const blocks = sampleBlocks
   const words = useMemo(() => countWords(blocks), [blocks])
@@ -148,7 +150,9 @@ export function BookReader({ book, chapterNumber }: BookReaderProps) {
     if (saved?.chapter === chapterNumber && saved.position > 0.02) {
       requestAnimationFrame(() => {
         const max = document.documentElement.scrollHeight - window.innerHeight
-        window.scrollTo({ top: saved.position * max, behavior: 'instant' })
+        const top = saved.position * max
+        if (lenisRef.current) lenisRef.current.scrollTo(top, { immediate: true })
+        else window.scrollTo({ top, behavior: 'instant' })
       })
     } else {
       saveProgress({ slug: book.slug, chapter: chapterNumber, position: 0, updatedAt: Date.now() })
@@ -170,7 +174,9 @@ export function BookReader({ book, chapterNumber }: BookReaderProps) {
       window.clearTimeout(saveTimer)
       window.removeEventListener('scroll', onScroll)
     }
-  }, [book.slug, chapterNumber, locked])
+  }, [book.slug, chapterNumber, locked, lenisRef])
+
+  useRevealOnScroll(articleRef, !locked)
 
   // Keyboard: Esc closes, arrows move between chapters.
   useEffect(() => {
@@ -247,9 +253,11 @@ export function BookReader({ book, chapterNumber }: BookReaderProps) {
   const jumpToHighlight = (id: string) => {
     setPanel(null)
     requestAnimationFrame(() => {
-      document
-        .querySelector(`[data-hl="${CSS.escape(id)}"]`)
-        ?.scrollIntoView({ block: 'center' })
+      const mark = document.querySelector<HTMLElement>(`[data-hl="${CSS.escape(id)}"]`)
+      if (!mark) return
+      const offset = -window.innerHeight / 3
+      if (lenisRef.current) lenisRef.current.scrollTo(mark, { offset, duration: 0.9 })
+      else mark.scrollIntoView({ block: 'center', behavior: 'smooth' })
     })
   }
 
@@ -440,7 +448,9 @@ export function BookReader({ book, chapterNumber }: BookReaderProps) {
             <ChevronLeftIcon size={18} />
           </a>
           <span className="bk-num">
-            {Math.round(position * 100)}% of chapter · {minutesLeft} min left
+            {position >= 0.99
+              ? 'End of chapter'
+              : `${Math.round(position * 100)}% of chapter · ${minutesLeft} min left`}
           </span>
           <span className="bk-num bk-status__book">Book {bookPercent}%</span>
           <a

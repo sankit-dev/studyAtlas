@@ -3,10 +3,8 @@
    Everything is scoped under .bk-root / .bk-reader so the rest of the site is
    untouched. */
 
-html:has(.bk-root) {
-  background: #0a0a0a;
-  color-scheme: dark;
-}
+html.dark:has(.bk-root) { background: #0a0a0a; }
+html:not(.dark):has(.bk-root) { background: #fbfaf5; }
 html:has(.bk-reader[data-theme='dark']) { background: #0a0a0a; color-scheme: dark; }
 html:has(.bk-reader[data-theme='night']) { background: #000; color-scheme: dark; }
 html:has(.bk-reader[data-theme='sepia']) { background: #f2e8d5; color-scheme: light; }
@@ -22,6 +20,10 @@ html:has(.bk-reader[data-theme='paper']) { background: #f4f1ea; color-scheme: li
   --bk-text: #ededed;
   --bk-muted: #a1a1a1;
   --bk-dim: #737373;
+  --bk-hover-bg: #141414;
+  --bk-raised: #1a1a1a;
+  --bk-primary-hover: #ffffff;
+  --bk-grid-line: rgba(255, 255, 255, 0.05);
 
   --hl-yellow: rgba(234, 179, 8, 0.34);
   --hl-green: rgba(34, 197, 94, 0.28);
@@ -31,6 +33,22 @@ html:has(.bk-reader[data-theme='paper']) { background: #f4f1ea; color-scheme: li
   --hl-green-dot: #22c55e;
   --hl-blue-dot: #3b82f6;
   --hl-pink-dot: #ec4899;
+}
+
+/* Light site theme: same structure on the site's warm paper, never pure white. */
+html:not(.dark) .bk-root {
+  --bk-bg: #fbfaf5;
+  --bk-surface: #f5f3ec;
+  --bk-line: #e3e0d8;
+  --bk-line-soft: #ece9e2;
+  --bk-hover: #cfccc4;
+  --bk-text: #12161f;
+  --bk-muted: #4d5868;
+  --bk-dim: #68707d;
+  --bk-hover-bg: #f0eee6;
+  --bk-raised: #ece9e2;
+  --bk-primary-hover: #000000;
+  --bk-grid-line: rgba(18, 22, 31, 0.06);
 }
 
 .bk-root {
@@ -63,146 +81,12 @@ html:has(.bk-reader[data-theme='paper']) { background: #f4f1ea; color-scheme: li
   height: 620px;
   pointer-events: none;
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, var(--bk-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--bk-grid-line) 1px, transparent 1px);
   background-size: 56px 56px;
   background-position: center top;
   -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 30%, transparent 75%);
   mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 30%, transparent 75%);
-}
-
-/* ── Header ─────────────────────────────────────────────────────────── */
-
-.bk-header {
-  position: relative;
-  border-bottom: 1px solid var(--bk-line-soft);
-}
-
-.bk-header__inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.bk-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--bk-text);
-}
-
-.bk-logo__mark {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
-  background: var(--bk-text);
-  color: var(--bk-bg);
-  display: grid;
-  place-items: center;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 18px;
-}
-
-.bk-logo__name {
-  font-family: var(--font-display);
-  font-size: 21px;
-  font-weight: 500;
-}
-
-.bk-nav {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  font-size: 15px;
-}
-
-.bk-nav__link {
-  color: var(--bk-muted);
-  padding: 4px 0;
-  border-bottom: 2px solid transparent;
-}
-
-.bk-nav__link:hover {
-  color: var(--bk-text);
-}
-
-.bk-nav__link[data-active='true'] {
-  color: var(--bk-text);
-  font-weight: 600;
-  border-bottom-color: var(--bk-text);
-}
-
-.bk-account {
-  position: relative;
-}
-
-.bk-account__avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--bk-line);
-  background: var(--bk-surface);
-  color: var(--bk-text);
-  font-size: 13px;
-  font-weight: 600;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  padding: 0;
-}
-
-.bk-account__avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.bk-account__menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 8px);
-  z-index: 30;
-  min-width: 220px;
-  background: var(--bk-surface);
-  border: 1px solid var(--bk-line);
-  border-radius: 12px;
-  padding: 6px;
-}
-
-.bk-account__who {
-  display: flex;
-  flex-direction: column;
-  padding: 8px 10px 10px;
-  border-bottom: 1px solid var(--bk-line-soft);
-  margin-bottom: 6px;
-  font-size: 14px;
-}
-
-.bk-account__who span {
-  color: var(--bk-muted);
-  font-size: 13px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.bk-account__item {
-  width: 100%;
-  text-align: left;
-  padding: 8px 10px;
-  border-radius: 8px;
-  background: transparent;
-  border: 0;
-  color: var(--bk-text);
-  font-size: 14px;
-}
-
-.bk-account__item:hover {
-  background: #1a1a1a;
 }
 
 /* ── Buttons and type ───────────────────────────────────────────────── */
@@ -226,7 +110,7 @@ html:has(.bk-reader[data-theme='paper']) { background: #f4f1ea; color-scheme: li
 }
 
 .bk-btn--primary:hover {
-  background: #ffffff;
+  background: var(--bk-primary-hover);
 }
 
 .bk-btn--ghost {
@@ -501,7 +385,11 @@ html:has(.bk-reader[data-theme='paper']) { background: #f4f1ea; color-scheme: li
   background: #1a1a1a;
   border: 1px solid #2e2e2e;
   box-shadow: inset 6px 0 0 #121212;
-  color: var(--bk-text);
+  color: #ededed;
+}
+
+.bk-cover[data-tone='dark'] .bk-cover__brand {
+  color: #a1a1a1;
 }
 
 .bk-cover[data-tone='light'] {
@@ -551,13 +439,13 @@ html:has(.bk-reader[data-theme='paper']) { background: #f4f1ea; color-scheme: li
 .bk-cover__boxes i {
   width: 34px;
   height: 18px;
-  border: 1.5px solid var(--bk-dim);
+  border: 1.5px solid #737373;
   border-radius: 4px;
 }
 
 .bk-cover__boxes i[data-filled='true'] {
-  background: var(--bk-text);
-  border-color: var(--bk-text);
+  background: #ededed;
+  border-color: #ededed;
 }
 
 .bk-cover__boxes i[data-round='true'] {
@@ -672,7 +560,7 @@ html:has(.bk-reader[data-theme='paper']) { background: #f4f1ea; color-scheme: li
 }
 
 .bk-toc__row:hover {
-  background: #111111;
+  background: var(--bk-hover-bg);
 }
 
 .bk-toc__num {
@@ -1601,20 +1489,6 @@ html:has(.bk-reader[data-theme='paper']) { background: #f4f1ea; color-scheme: li
 }
 
 @media (max-width: 760px) {
-  .bk-header__inner {
-    padding: 12px 16px;
-    gap: 12px;
-  }
-
-  .bk-logo__name {
-    display: none;
-  }
-
-  .bk-nav {
-    gap: 18px;
-    font-size: 14px;
-  }
-
   .bk-main {
     padding: 40px 16px 72px;
     gap: 36px;
@@ -1697,9 +1571,180 @@ html:has(.bk-reader[data-theme='paper']) { background: #f4f1ea; color-scheme: li
   }
 }
 
-@media (max-width: 420px) {
-  .bk-nav__link:first-child,
-  .bk-nav__link:nth-child(2) {
-    display: none;
+
+/* ── Motion ─────────────────────────────────────────────────────────────
+   Quiet and short: fades, colour changes, sideways drawer slides and a
+   slight scale on press. Nothing rises or bounces. All of it switches off
+   for people who ask for reduced motion. */
+
+@keyframes bk-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bk-pop-in {
+  from { opacity: 0; transform: var(--bk-pop-from, translate(-50%, -100%)) scale(0.96); }
+  to { opacity: 1; transform: var(--bk-pop-from, translate(-50%, -100%)) scale(1); }
+}
+
+@keyframes bk-panel-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bk-grow-x {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes bk-slide-left {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes bk-slide-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* Page content fades in, section by section. */
+.bk-enter {
+  animation: bk-fade-in 420ms cubic-bezier(0.2, 0, 0, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+.bk-btn,
+.bk-tab,
+.bk-rbtn,
+.bk-icon-btn,
+.bk-toc__row,
+.bk-drawer__row,
+.bk-pager__link,
+.bk-popover__action,
+.bk-segment button,
+.bk-stepper button,
+.bk-swatch {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 120ms ease;
+}
+
+.bk-btn:active,
+.bk-rbtn:active,
+.bk-tab:active,
+.bk-icon-btn:active,
+.bk-swatch:active,
+.bk-popover__swatch:active {
+  transform: scale(0.97);
+}
+
+/* Covers settle a touch larger when their card is hovered. */
+.bk-cover {
+  transition: transform 420ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.bk-card:hover .bk-cover,
+.bk-card__cover:focus-visible .bk-cover {
+  transform: scale(1.025);
+}
+
+.bk-bar > div {
+  transform-origin: left;
+  animation: bk-grow-x 900ms cubic-bezier(0.2, 0, 0, 1) 200ms both;
+}
+
+.bk-toc__list li {
+  animation: bk-fade-in 260ms ease both;
+}
+
+/* Reader */
+.bk-reader,
+.bk-reader__bar,
+.bk-status,
+.bk-callout,
+.bk-code,
+.bk-note {
+  transition:
+    background-color 280ms ease,
+    color 280ms ease,
+    border-color 280ms ease;
+}
+
+.bk-reader__progress > div {
+  transition: width 140ms linear;
+}
+
+.bk-article {
+  transition: max-width 320ms cubic-bezier(0.2, 0, 0, 1), font-size 200ms ease;
+}
+
+/* Blocks below the fold fade in as they scroll into view. */
+.bk-article > .bk-pending {
+  opacity: 0;
+}
+
+.bk-article > .bk-revealed {
+  animation: bk-fade-in 560ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.bk-popover {
+  animation: bk-pop-in 140ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.bk-popover[data-below='true'] {
+  --bk-pop-from: translate(-50%, 0);
+}
+
+.bk-panel {
+  transform-origin: top right;
+  animation: bk-panel-in 160ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.bk-scrim {
+  animation: bk-fade-in 200ms ease both;
+}
+
+.bk-drawer[data-side='left'] {
+  animation: bk-slide-left 260ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.bk-drawer[data-side='right'] {
+  animation: bk-slide-right 260ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.bk-note--editing {
+  animation: bk-fade-in 200ms ease both;
+}
+
+.bk-mark {
+  transition: background-color 200ms ease;
+}
+
+/* Smooth-scroll library hooks (Lenis) for the reader. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bk-root *,
+  .bk-reader,
+  .bk-reader * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .bk-article > .bk-pending {
+    opacity: 1;
   }
 }

@@ -12,6 +12,7 @@ import {
 } from '../../data/books'
 import { BookCover } from './BookCover'
 import { BooksLayout } from './BooksLayout'
+import { enterDelay } from './motion'
 import { loadAllProgress } from './storage'
 
 export function BooksCatalogue() {
@@ -36,9 +37,9 @@ export function BooksCatalogue() {
     filter === 'all' ? books : books.filter((book) => book.category === filter)
 
   return (
-    <BooksLayout active="books" grid>
+    <BooksLayout grid>
       <main className="bk-main">
-        <section className="bk-intro">
+        <section className="bk-intro bk-enter" style={enterDelay(0)}>
           <h1 className="bk-h1">Books for engineering interviews</h1>
           <p className="bk-lede">
             Read in the browser. Highlight, take notes, pick up where you left off.
@@ -46,7 +47,11 @@ export function BooksCatalogue() {
         </section>
 
         {latestBook && latest && latestChapter && (
-          <section aria-label="Continue reading" className="bk-continue">
+          <section
+            aria-label="Continue reading"
+            className="bk-continue bk-enter"
+            style={enterDelay(1)}
+          >
             <div className="bk-continue__body">
               <div className="bk-continue__row">
                 <strong>{latestBook.title}</strong>
@@ -64,7 +69,11 @@ export function BooksCatalogue() {
           </section>
         )}
 
-        <section aria-labelledby="all-books" className="bk-stack">
+        <section
+          aria-labelledby="all-books"
+          className="bk-stack bk-enter"
+          style={enterDelay(2)}
+        >
           <div className="bk-section-head">
             <h2 className="bk-h2" id="all-books">
               All books
@@ -86,10 +95,14 @@ export function BooksCatalogue() {
           </div>
 
           <div className="bk-cards">
-            {visibleBooks.map((book) => {
+            {visibleBooks.map((book, index) => {
               const saved = progress[book.slug]
               return (
-                <article className="bk-card" key={book.slug}>
+                <article
+                  className="bk-card bk-enter"
+                  key={`${filter}:${book.slug}`}
+                  style={enterDelay(index)}
+                >
                   <a aria-label={book.title} className="bk-card__cover" href={bookPath(book)}>
                     <BookCover book={book} />
                   </a>

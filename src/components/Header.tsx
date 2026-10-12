@@ -43,6 +43,10 @@ export function Header({ onThemeToggle, theme }: HeaderProps) {
       return activePath === '/library'
     }
 
+    if (href === '/books') {
+      return activePath === '/books' || activePath.startsWith('/books/')
+    }
+
     if (href === '/dsa') {
       return activePath === '/dsa' || activePath.startsWith('/dsa/')
     }

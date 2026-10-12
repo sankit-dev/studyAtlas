@@ -365,8 +365,20 @@ function App() {
   if (booksRoute) {
     return (
       <>
-        <Suspense fallback={<div className="min-h-svh bg-[#0a0a0a]" />}>
-          <BooksApp route={booksRoute} />
+        <Suspense fallback={<div className="min-h-svh bg-(--color-page)" />}>
+          <BooksApp
+            header={
+              <Header
+                theme={theme}
+                onThemeToggle={() =>
+                  setTheme((currentTheme) =>
+                    currentTheme === 'light' ? 'dark' : 'light',
+                  )
+                }
+              />
+            }
+            route={booksRoute}
+          />
         </Suspense>
         <SpeedInsights />
         <Analytics />

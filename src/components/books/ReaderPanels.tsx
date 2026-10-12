@@ -39,7 +39,7 @@ export function SettingsPanel({ prefs, onChange }: SettingsPanelProps) {
     onChange({ ...prefs, [key]: value })
 
   return (
-    <div aria-label="Reading settings" className="bk-panel bk-settings" role="dialog">
+    <div aria-label="Reading settings" className="bk-panel bk-settings" data-lenis-prevent role="dialog">
       <fieldset className="bk-field">
         <legend>Theme</legend>
         <div className="bk-swatches">
@@ -136,7 +136,7 @@ function Drawer({ title, side, onClose, children }: DrawerProps) {
             <CloseIcon size={18} />
           </button>
         </div>
-        <div className="bk-drawer__body">{children}</div>
+        <div className="bk-drawer__body" data-lenis-prevent>{children}</div>
       </aside>
     </>
   )

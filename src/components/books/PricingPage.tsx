@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { signInWithGithub, useBookAccess } from './access'
 import { BooksLayout } from './BooksLayout'
+import { enterDelay } from './motion'
 import { CheckIcon } from './icons'
 
 const features = [
@@ -24,11 +25,11 @@ export function PricingPage() {
   }
 
   return (
-    <BooksLayout active="pricing" grid>
+    <BooksLayout grid>
       <main className="bk-main bk-main--center">
-        <h1 className="bk-h1 bk-center">One plan. Every book.</h1>
+        <h1 className="bk-h1 bk-center bk-enter" style={enterDelay(0)}>One plan. Every book.</h1>
 
-        <section aria-label="Plan" className="bk-plan">
+        <section aria-label="Plan" className="bk-plan bk-enter" style={enterDelay(1)}>
           <div className="bk-plan__price">
             <span className="bk-plan__amount">$5</span>
             <span className="bk-muted">/ month</span>

@@ -106,92 +106,229 @@ body {
   background: var(--color-page);
 }
 
-/* ── Home hero: the night artwork, desaturated ──────────────────────────── */
+/* ── Home hero: follows the theme, drawn constellation, no photo ─────────── */
 
 .page-hero-bg {
-  --color-text: #e2e2e2;
-  --color-muted: #a1a1a1;
-  --color-surface: #111111;
-  --color-line: #333333;
-  --color-soft-line: #262626;
-  --color-inverse-bg: #ededed;
-  --color-inverse-text: #0a0a0a;
-  --color-inverse-muted: #525252;
-  background:
-    radial-gradient(ellipse 70% 95% at 18% 62%, rgb(0 0 0 / 0.86) 0%, rgb(0 0 0 / 0.62) 50%, rgb(0 0 0 / 0) 85%),
-    linear-gradient(180deg, rgb(0 0 0 / 0.35) 0%, rgb(0 0 0 / 0.45) 40%, rgb(0 0 0 / 0.4) 75%, rgb(0 0 0 / 0) 100%);
-  background-color: #0a0a0a;
-}
-
-.page-hero-bg::before {
-  content: '';
-  position: absolute;
-  inset: -12px -12px 0;
-  z-index: -2;
-  background: url('/hero-night-bw.webp') center / cover no-repeat;
-  /* Soften the high-contrast rings (pattern glare) and keep the field dim. */
-  filter: brightness(0.36) contrast(0.78) blur(1.5px);
-  pointer-events: none;
+  --color-page: inherit;
+  --color-text: inherit;
+  --color-muted: inherit;
+  --color-surface: inherit;
+  --color-line: inherit;
+  --color-soft-line: inherit;
+  --color-shadow: inherit;
+  --color-inverse-bg: inherit;
+  --color-inverse-text: inherit;
+  --color-inverse-muted: inherit;
+  --color-accent: inherit;
+  --color-accent-strong: inherit;
+  --color-accent-text: inherit;
+  --color-accent-muted: inherit;
+  background: var(--color-page);
+  color: var(--color-text);
 }
 
 @media (min-aspect-ratio: 4/3) {
   .page-hero-bg {
-    background:
-      radial-gradient(ellipse 70% 95% at 18% 62%, rgb(0 0 0 / 0.86) 0%, rgb(0 0 0 / 0.62) 50%, rgb(0 0 0 / 0) 85%),
-      linear-gradient(180deg, rgb(0 0 0 / 0.35) 0%, rgb(0 0 0 / 0.45) 40%, rgb(0 0 0 / 0.4) 75%, rgb(0 0 0 / 0) 100%);
-    background-color: #0a0a0a;
-  }
-
-  .page-hero-bg::before {
-    background: url('/hero-night-bw.webp') center / cover no-repeat;
+    background: var(--color-page);
   }
 }
 
-.page-hero-bg a.button-link.button-link--accent,
-.page-hero-bg a.button-link.button-link--accent:hover {
-  border-color: #ededed;
-  background: #ededed;
-  color: #0a0a0a;
+.page-hero-bg::before,
+.page-hero-bg::after {
+  display: none;
+}
+
+.page-hero-bg a.button-link.button-link--accent {
+  border-color: var(--color-inverse-bg);
+  background: var(--color-inverse-bg);
+  color: var(--color-inverse-text);
 }
 
 .page-hero-bg a.button-link.button-link--accent:hover {
-  background: #ffffff;
+  border-color: var(--color-accent-strong);
+  background: var(--color-accent-strong);
+  color: var(--color-inverse-text);
+}
+
+.hero h1 {
+  color: var(--color-text);
+  text-shadow: none;
 }
 
 .hero__copy > p:not(.hero__stats) {
-  color: #c4c4c4;
-  text-shadow: 0 1px 16px rgb(0 0 0 / 0.6);
+  color: var(--color-muted);
+  text-shadow: none;
 }
 
 .hero__modes a {
-  color: #a1a1a1;
-  text-decoration-color: rgb(237 237 237 / 0.22);
+  color: var(--color-muted);
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
 }
 
 .hero__modes a:hover,
 .hero__modes a:focus-visible {
-  color: #ededed;
+  color: var(--color-text);
 }
 
 .hero__stats {
-  color: #c4c4c4;
-  text-shadow: 0 1px 14px rgb(0 0 0 / 0.9);
+  color: var(--color-muted);
+  text-shadow: none;
 }
 
 .hero__secondary {
-  border-color: rgb(237 237 237 / 0.28);
-  background: rgb(0 0 0 / 0.35);
-  color: #ededed;
+  border-color: var(--color-line);
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  color: var(--color-text);
 }
 
 .hero__secondary:hover,
 .hero__secondary:focus-visible {
-  border-color: #ededed;
-  background: rgb(0 0 0 / 0.6);
+  border-color: var(--color-muted);
+  background: transparent;
 }
 
-.hero h1 {
-  text-shadow: 0 1px 30px rgb(0 0 0 / 0.4);
+/* Right column: the constellation with the current track beneath it. */
+@media (min-width: 981px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.35fr) minmax(360px, 1fr);
+  }
+}
+
+.hero__path {
+  min-width: 0;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hero__path-info {
+  padding-left: 6px;
+}
+
+.hero__path-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hero__path-track {
+  margin: 10px 0 0;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.hero__path-note {
+  margin: 6px 0 14px;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.hero-constellation {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: var(--font-sans);
+}
+
+.hero-constellation__sky circle {
+  fill: var(--color-text);
+}
+
+.hero-constellation__moon {
+  fill: var(--color-text);
+}
+
+.hero-constellation__edge {
+  stroke: var(--color-line);
+  stroke-width: 1.2;
+}
+
+.hero-constellation__edge[data-done='true'] {
+  stroke: var(--color-muted);
+}
+
+.hero-constellation__reach {
+  stroke: var(--color-line);
+  stroke-width: 1.2;
+  stroke-dasharray: 2 6;
+  stroke-linecap: round;
+}
+
+.hero-constellation__hit {
+  fill: transparent;
+}
+
+.hero-constellation__dot {
+  fill: color-mix(in srgb, var(--color-muted) 55%, var(--color-page));
+  transition: fill 160ms ease;
+}
+
+.hero-constellation__star[data-status='completed'] .hero-constellation__dot,
+.hero-constellation__star[data-status='next-recommended'] .hero-constellation__dot {
+  fill: var(--color-text);
+}
+
+.hero-constellation__ring {
+  fill: none;
+  stroke: var(--color-muted);
+  stroke-width: 1;
+}
+
+.hero-constellation__label {
+  fill: color-mix(in srgb, var(--color-muted) 80%, var(--color-page));
+  font-size: 11.5px;
+  transition: fill 160ms ease;
+}
+
+.hero-constellation__star[data-status='next-recommended'] .hero-constellation__label,
+.hero-constellation__star[data-status='completed'] .hero-constellation__label {
+  fill: var(--color-text);
+}
+
+.hero-constellation__star:hover .hero-constellation__dot,
+.hero-constellation__star:focus-visible .hero-constellation__dot,
+.hero-constellation__star:hover .hero-constellation__label,
+.hero-constellation__star:focus-visible .hero-constellation__label {
+  fill: var(--color-text);
+}
+
+.hero-constellation__star:focus-visible {
+  outline: none;
+}
+
+.hero-constellation__star:focus-visible .hero-constellation__ring,
+.hero-constellation__star:focus-visible .hero-constellation__hit {
+  stroke: var(--color-text);
+  stroke-width: 1;
+}
+
+.hero-constellation__figure {
+  fill: var(--color-text);
+  stroke: var(--color-text);
+  stroke-linecap: round;
+}
+
+.hero-constellation__ground {
+  stroke: var(--color-line);
+  stroke-width: 1;
+}
+
+@media (max-width: 980px) {
+  .hero__path {
+    max-width: 460px;
+  }
 }
 
 /* ── One voice across tabs ──────────────────────────────────────────────── */
@@ -242,10 +379,3 @@ body {
   letter-spacing: -0.015em;
 }
 
-/* The hero is always dark, so its accents stay light in both themes. */
-.page-hero-bg {
-  --color-accent: #ededed;
-  --color-accent-strong: #ffffff;
-  --color-accent-text: #ededed;
-  --color-accent-muted: #a1a1a1;
-}

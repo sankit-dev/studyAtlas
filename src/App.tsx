@@ -28,6 +28,7 @@ const Support = lazy(() =>
 )
 import {
   getCurrentLearningStep,
+  getLearningPathSteps,
   getLastCompletedNote,
   getOverallProgress,
 } from './data/learningPath'
@@ -437,6 +438,7 @@ function App() {
             <main>
               <Hero
                 currentStep={currentLearningStep}
+                pathSteps={getLearningPathSteps(completedNoteSlugs)}
                 lastCompletedNote={lastCompletedNote}
                 overallProgress={overallProgress}
               />

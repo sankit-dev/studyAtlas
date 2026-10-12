@@ -128,8 +128,8 @@ body {
   position: absolute;
   inset: 0;
   z-index: -2;
-  background: url('/hero-night.webp') center / cover no-repeat;
-  filter: grayscale(1) brightness(0.34) contrast(1.1);
+  background: url('/hero-night-bw.webp') center / cover no-repeat;
+  filter: brightness(0.5);
   pointer-events: none;
 }
 
@@ -142,7 +142,7 @@ body {
   }
 
   .page-hero-bg::before {
-    background: url('/hero-night.webp') center bottom / 138% auto no-repeat;
+    background: url('/hero-night-bw.webp') center bottom / 138% auto no-repeat;
   }
 }
 

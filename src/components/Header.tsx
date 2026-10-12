@@ -8,6 +8,7 @@ const navigationLinks = [
   { label: 'Library', href: '/library' },
   { label: 'Revise', href: '/library?view=revise' },
   { label: 'DSA', href: '/dsa' },
+  { label: 'Books', href: '/books' },
 ] as const
 
 type HeaderProps = {

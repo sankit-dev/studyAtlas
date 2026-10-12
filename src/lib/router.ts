@@ -56,3 +56,25 @@ export function isDsaPath(pathname: string) {
 export function isLibraryPath(pathname: string) {
   return pathname === '/library'
 }
+
+export type BooksRoute =
+  | { kind: 'catalogue' }
+  | { kind: 'pricing' }
+  | { kind: 'book'; slug: string }
+  | { kind: 'read'; slug: string; chapter: number }
+
+/** /books, /books/:slug, /books/:slug/read/:chapter and /pricing. */
+export function getBooksRoute(pathname: string): BooksRoute | null {
+  const path = pathname.replace(/\/+$/, '') || '/'
+  if (path === '/pricing') return { kind: 'pricing' }
+  if (path === '/books') return { kind: 'catalogue' }
+  if (!path.startsWith('/books/')) return null
+
+  const [slug, segment, chapter] = path.slice('/books/'.length).split('/')
+  if (!slug) return { kind: 'catalogue' }
+  if (segment === 'read') {
+    const number = Number.parseInt(chapter ?? '', 10)
+    return { kind: 'read', slug, chapter: Number.isFinite(number) ? number : 1 }
+  }
+  return { kind: 'book', slug }
+}

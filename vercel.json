@@ -7,7 +7,10 @@
     { "source": "/library", "destination": "/index.html" },
     { "source": "/notes/:path*", "destination": "/index.html" },
     { "source": "/dsa", "destination": "/index.html" },
-    { "source": "/dsa/:path*", "destination": "/index.html" }
+    { "source": "/dsa/:path*", "destination": "/index.html" },
+    { "source": "/books", "destination": "/index.html" },
+    { "source": "/books/:path*", "destination": "/index.html" },
+    { "source": "/pricing", "destination": "/index.html" }
   ],
   "headers": [
     {

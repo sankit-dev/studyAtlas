@@ -20,6 +20,9 @@ const NoteReader = lazy(() =>
 const Roadmap = lazy(() =>
   import('./components/Roadmap').then((m) => ({ default: m.Roadmap })),
 )
+const BooksApp = lazy(() =>
+  import('./components/books/BooksApp').then((m) => ({ default: m.BooksApp })),
+)
 const Support = lazy(() =>
   import('./components/Support').then((m) => ({ default: m.Support })),
 )
@@ -35,6 +38,7 @@ import {
   syncCompletedNoteSlugs,
 } from './lib/noteProgress'
 import {
+  getBooksRoute,
   getDsaQuestIdFromPath,
   getNoteSlugFromPath,
   getPathname,
@@ -127,6 +131,8 @@ function App() {
   const activeDsaQuestId = getDsaQuestIdFromPath(pathname)
   const isDsa = isDsaPath(pathname)
   const isLibrary = isLibraryPath(pathname)
+  const booksRoute = getBooksRoute(pathname)
+  const booksRouteKind = booksRoute?.kind
   const activeNoteMatch = tracks
     .flatMap((track) =>
       flattenNotes(track.topics).map((note) => ({
@@ -250,7 +256,23 @@ function App() {
 
   // Per-route SEO: title, description, canonical, OG + page_view.
   useEffect(() => {
-    if (activeNoteMatch) {
+    if (booksRouteKind) {
+      updateSeo(
+        booksRouteKind === 'pricing'
+          ? {
+              title: 'Pricing',
+              description:
+                'One plan for every StudyAtlas book: all current and future books, the newsletter and new-book emails.',
+              path: '/pricing',
+            }
+          : {
+              title: 'Books',
+              description:
+                'StudyAtlas books for engineering interviews. Read in the browser, highlight, take notes and pick up where you left off.',
+              path: pathname,
+            },
+      )
+    } else if (activeNoteMatch) {
       updateSeo({
         title: activeNoteMatch.note.title,
         description: activeNoteMatch.note.description,
@@ -285,7 +307,7 @@ function App() {
         path: '/',
       })
     }
-  }, [pathname, activeNoteMatch, isLibrary, isDsa])
+  }, [pathname, activeNoteMatch, isLibrary, isDsa, booksRouteKind])
 
   useEffect(() => {
     if (!session?.user || hasLoadedRemoteProgress.current) {
@@ -339,6 +361,18 @@ function App() {
     },
     [],
   )
+
+  if (booksRoute) {
+    return (
+      <>
+        <Suspense fallback={<div className="min-h-svh bg-[#0a0a0a]" />}>
+          <BooksApp route={booksRoute} />
+        </Suspense>
+        <SpeedInsights />
+        <Analytics />
+      </>
+    )
+  }
 
   return (
     <PageShell variant={isDsa ? 'dsa' : 'default'}>

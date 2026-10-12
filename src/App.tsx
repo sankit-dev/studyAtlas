@@ -23,9 +23,6 @@ const Roadmap = lazy(() =>
 const BooksApp = lazy(() =>
   import('./components/books/BooksApp').then((m) => ({ default: m.BooksApp })),
 )
-const Support = lazy(() =>
-  import('./components/Support').then((m) => ({ default: m.Support })),
-)
 import {
   getCurrentLearningStep,
   getLearningPathSteps,
@@ -446,7 +443,6 @@ function App() {
           </div>
           <Suspense fallback={<div className="min-h-40" />}>
             <Roadmap completedNoteSlugs={completedNoteSlugs} />
-            <Support />
           </Suspense>
           <Footer />
         </>

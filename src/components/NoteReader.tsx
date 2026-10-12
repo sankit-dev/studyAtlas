@@ -13,7 +13,6 @@ import { getMarkdownToc, type MarkdownTocItem } from '../lib/markdownToc'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 import { MarkdownRenderer } from './MarkdownRenderer'
 import { Wrap } from './PageShell'
-import { SupportCard } from './SupportCard'
 
 type NoteReaderProps = {
   completedNoteSlugs: Set<string>
@@ -619,8 +618,6 @@ export function NoteReader({
                   : 'Mark understood'}
               </button>
             </div>
-
-            <SupportCard variant="inline" />
 
             <nav
               aria-label="Previous and next notes"

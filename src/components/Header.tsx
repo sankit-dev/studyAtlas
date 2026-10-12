@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AuthControls } from './AuthControls'
 import { Brand } from './Brand'
-import { useDonation } from '../lib/donation'
 
 const navigationLinks = [
   { label: 'Library', href: '/library' },
@@ -15,7 +14,6 @@ type HeaderProps = {
 }
 
 export function Header({ onThemeToggle, theme }: HeaderProps) {
-  const { openDonation } = useDonation()
   const isDark = theme === 'dark'
   const [activePath, setActivePath] = useState(() =>
     typeof window === 'undefined'
@@ -69,27 +67,6 @@ export function Header({ onThemeToggle, theme }: HeaderProps) {
         })}
       </div>
       <div className="site-header-actions">
-        <button
-          aria-label="Support this work"
-          className="site-header-donate"
-          onClick={() => openDonation()}
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            fill="none"
-            height="16"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.8"
-            viewBox="0 0 24 24"
-            width="16"
-          >
-            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-          </svg>
-          <span>Support</span>
-        </button>
         <button
           aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
           aria-pressed={isDark}

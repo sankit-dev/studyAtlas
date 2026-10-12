@@ -359,7 +359,7 @@ export function DsaCourse({ activeQuestId, onNavigateQuest }: DsaCourseProps) {
           <aside className="dsa-garden-card" aria-label="DSA course progress">
             <div className="dsa-garden-card__top">
               <div>
-                <span>YOUR QUIET PROGRESS</span>
+                <span>Your progress</span>
                 <strong>{totalProgressed} of {dsaQuests.length}</strong>
               </div>
               <span className="dsa-garden-card__seed" aria-hidden="true">✦</span>
@@ -653,7 +653,7 @@ export function DsaCourse({ activeQuestId, onNavigateQuest }: DsaCourseProps) {
 
         <section className="dsa-progress-note" aria-label="Your course progress">
           <div>
-            <span>YOUR NOTES</span>
+            <span>Your notes</span>
             <p>
               {solvedCount} solved independently · {guidedCount} solved with support · {reviewCount} marked for review
             </p>

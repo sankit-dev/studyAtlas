@@ -181,7 +181,7 @@ h2 {
   border-color: color-mix(in srgb, var(--color-accent-strong) 55%, var(--color-line));
   background: color-mix(in srgb, var(--color-accent-strong) 12%, transparent);
   color: var(--color-accent-text);
-  transform: translateY(-1px);
+  transform: none;
 }
 
 @media (max-width: 640px) {
@@ -252,42 +252,42 @@ h2 {
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 
 .page-hero-bg {
-  --color-text: #f4eddb;
-  --color-muted: #c3c9dd;
-  --color-surface: #151f3a;
-  --color-line: #3a456e;
-  --color-soft-line: #2a3552;
-  --color-inverse-bg: #f4eddb;
-  --color-inverse-text: #101830;
+  --color-text: #ededed;
+  --color-muted: #a1a1a1;
+  --color-surface: #111111;
+  --color-line: #333333;
+  --color-soft-line: #262626;
+  --color-inverse-bg: #ededed;
+  --color-inverse-text: #0a0a0a;
   background:
     /* Copy-column scrim: keeps text readable over the tan ground. */
     radial-gradient(
       ellipse 66% 92% at 20% 72%,
-      rgb(6 10 26 / 0.8) 0%,
-      rgb(6 10 26 / 0.58) 48%,
-      rgb(6 10 26 / 0) 82%
+      rgb(0 0 0 / 0.8) 0%,
+      rgb(0 0 0 / 0.58) 48%,
+      rgb(0 0 0 / 0) 82%
     ),
     linear-gradient(
       180deg,
-      rgb(6 10 26 / 0.8) 0%,
-      rgb(6 10 26 / 0.64) 30%,
-      rgb(6 10 26 / 0.56) 52%,
-      rgb(6 10 26 / 0.5) 72%,
-      rgb(6 10 26 / 0.36) 88%,
-      rgb(6 10 26 / 0) 100%
+      rgb(0 0 0 / 0.8) 0%,
+      rgb(0 0 0 / 0.64) 30%,
+      rgb(0 0 0 / 0.56) 52%,
+      rgb(0 0 0 / 0.5) 72%,
+      rgb(0 0 0 / 0.36) 88%,
+      rgb(0 0 0 / 0) 100%
     ),
-    url('/hero-night.webp') center / cover no-repeat;
+    transparent;
 }
 
 .page-hero-bg a.button-link.button-link--accent {
-  border-color: #f4eddb;
-  background: #f4eddb;
-  color: #101830;
+  border-color: #ededed;
+  background: #ededed;
+  color: #0a0a0a;
 }
 
 .page-hero-bg a.button-link.button-link--accent:hover {
   background: #fff;
-  color: #101830;
+  color: #0a0a0a;
 }
 
 .hero {
@@ -311,7 +311,7 @@ h2 {
   font-weight: 300;
   line-height: 1.06;
   letter-spacing: -0.025em;
-  text-shadow: 0 1px 30px rgb(5 8 20 / 0.35);
+  text-shadow: 0 1px 30px rgb(0 0 0 / 0.35);
 }
 
 /* The rotating half of the headline is set apart by the italic alone. */
@@ -344,12 +344,12 @@ h2 {
 .hero__copy > p:not(.hero__stats) {
   max-width: 48ch;
   margin: 22px 0 0;
-  color: #c9cfdf;
+  color: #c4c4c4;
   font-size: 17px;
   font-weight: 400;
   line-height: 1.65;
   text-wrap: pretty;
-  text-shadow: 0 1px 16px rgb(5 8 20 / 0.6);
+  text-shadow: 0 1px 16px rgb(0 0 0 / 0.6);
 }
 
 .hero__modes {
@@ -365,27 +365,27 @@ h2 {
   display: inline-flex;
   min-height: 32px;
   align-items: center;
-  color: #aeb5ca;
+  color: #a1a1a1;
   font-size: 13.5px;
   font-weight: 400;
   text-decoration: underline;
-  text-decoration-color: rgb(244 237 219 / 0.22);
+  text-decoration-color: rgb(237 237 237 / 0.22);
   text-underline-offset: 5px;
   transition: color 160ms var(--motion-ease), text-decoration-color 160ms var(--motion-ease);
 }
 
 .hero__modes a:hover,
 .hero__modes a:focus-visible {
-  color: #f4eddb;
+  color: #ededed;
   text-decoration-color: currentColor;
 }
 
 .hero__stats {
   margin: 10px 0 0;
-  color: #d3d8e6;
+  color: #c4c4c4;
   font-size: 12.5px;
   font-variant-numeric: tabular-nums;
-  text-shadow: 0 1px 14px rgb(5 8 20 / 0.9);
+  text-shadow: 0 1px 14px rgb(0 0 0 / 0.9);
 }
 
 .hero__actions {
@@ -400,13 +400,13 @@ h2 {
   display: inline-flex;
   min-height: 46px;
   align-items: center;
-  border: 1px solid rgb(244 237 219 / 0.3);
+  border: 1px solid rgb(237 237 237 / 0.3);
   border-radius: 999px;
-  background: rgb(6 10 26 / 0.3);
+  background: rgb(0 0 0 / 0.3);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   padding: 0 22px;
-  color: #f4eddb;
+  color: #ededed;
   font-size: 14px;
   font-weight: 500;
   transition: border-color 160ms var(--motion-ease), background-color 160ms var(--motion-ease),
@@ -415,8 +415,8 @@ h2 {
 
 .hero__secondary:hover,
 .hero__secondary:focus-visible {
-  border-color: #f4eddb;
-  background: rgb(6 10 26 / 0.66);
+  border-color: #ededed;
+  background: rgb(0 0 0 / 0.66);
 }
 
 .hero__secondary:active,
@@ -436,14 +436,14 @@ h2 {
   border: 0;
   background: none;
   padding: 0 0 10px;
-  color: #bcc2d6;
+  color: #a1a1a1;
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
 }
 
 .hero__tabs button[aria-selected='true'] {
-  color: #f4eddb;
+  color: #ededed;
 }
 
 .hero__tabs button[aria-selected='true']::after {
@@ -453,7 +453,7 @@ h2 {
   bottom: -1px;
   left: 0;
   height: 1px;
-  background: #f4eddb;
+  background: #ededed;
 }
 
 .hero__revise-list {
@@ -474,7 +474,7 @@ h2 {
 
 .hero__revise-list li::before {
   content: counter(revise, decimal-leading-zero);
-  color: #9aa3bd;
+  color: #8a8a8a;
   font-size: 12px;
   font-variant-numeric: tabular-nums;
   line-height: 1.7;
@@ -490,12 +490,12 @@ h2 {
   align-self: center;
   border: 1px solid color-mix(in srgb, #fff 18%, transparent);
   border-radius: 16px;
-  background: color-mix(in srgb, #0b1020 62%, transparent);
+  background: color-mix(in srgb, #0a0a0a 62%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 24px 60px rgb(5 8 20 / 0.35);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.35);
   padding: 24px 26px 22px;
-  color: #f4eddb;
+  color: #ededed;
 }
 
 .hero__progress-head {
@@ -504,7 +504,7 @@ h2 {
   justify-content: space-between;
   gap: 16px;
   font-size: 12.5px;
-  color: #bcc2d6;
+  color: #a1a1a1;
 }
 
 .hero__progress-track {
@@ -518,7 +518,7 @@ h2 {
 
 .hero__progress-note {
   margin: 8px 0 0;
-  color: #bcc2d6;
+  color: #a1a1a1;
   font-size: 14px;
   line-height: 1.5;
 }
@@ -532,14 +532,14 @@ h2 {
 .hero__meter i {
   display: block;
   height: 100%;
-  background: #f4eddb;
+  background: #ededed;
 }
 
 .hero__progress-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--accent-coral-soft);
+  color: var(--color-text);
   font-size: 14px;
   font-weight: 500;
   text-decoration: underline;
@@ -1193,10 +1193,10 @@ h2 {
 .note-understand-panel button {
   min-height: 50px;
   border-radius: 999px;
-  border-color: #0b0d12;
-  background: #0b0d12;
+  border-color: var(--color-inverse-bg);
+  background: var(--color-inverse-bg);
   padding: 0 28px;
-  color: #fff;
+  color: var(--color-inverse-text);
   font-size: 14px;
   font-weight: 650;
   cursor: pointer;
@@ -1210,11 +1210,11 @@ h2 {
 }
 
 .note-understand-panel button:hover {
-  background: #232733;
-  border-color: #232733;
-  color: #fff;
+  background: color-mix(in srgb, var(--color-inverse-bg) 85%, var(--color-page));
+  border-color: color-mix(in srgb, var(--color-inverse-bg) 85%, var(--color-page));
+  color: var(--color-inverse-text);
   box-shadow: 0 16px 36px color-mix(in srgb, var(--color-shadow) 50%, transparent);
-  transform: translateY(-1px);
+  transform: none;
 }
 
 :root.dark .note-understand-panel button:hover {
@@ -1224,7 +1224,7 @@ h2 {
 }
 
 .note-understand-panel button:active {
-  transform: translateY(0);
+  transform: none;
 }
 
 .note-understand-panel button:focus-visible {
@@ -1368,7 +1368,7 @@ h2 {
 .site-footer__feature:hover {
   border-color: var(--color-accent-strong);
   background: color-mix(in srgb, var(--color-accent-strong) 12%, transparent);
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .site-footer__badge {
@@ -1409,7 +1409,7 @@ h2 {
 }
 
 .site-footer__feature:hover .site-footer__feature-arrow {
-  transform: translate(2px, -2px);
+  transform: translateX(2px);
 }
 
 @keyframes footerSheen {
@@ -1566,7 +1566,7 @@ h2 {
 
 .support-card__amounts button:hover {
   border-color: color-mix(in srgb, var(--color-accent-strong) 45%, var(--color-line));
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .support-card__amounts button.is-active {
@@ -1591,11 +1591,11 @@ h2 {
 
 .support-card__cta:hover {
   background: color-mix(in srgb, var(--color-inverse-bg) 88%, var(--color-inverse-text));
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .support-card__cta:active {
-  transform: translateY(0);
+  transform: none;
 }
 
 .support-card__fine {
@@ -1650,7 +1650,7 @@ h2 {
 }
 
 .support-inline__cta:hover {
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .support-inline__dismiss {
@@ -1744,11 +1744,11 @@ h2 {
 @keyframes donateDialogIn {
   from {
     opacity: 0;
-    transform: translateY(10px) scale(0.985);
+    transform: scale(0.985);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: scale(1);
   }
 }
 
@@ -1806,7 +1806,7 @@ h2 {
 
 .donate-presets button:hover {
   border-color: color-mix(in srgb, var(--color-accent-strong) 45%, var(--color-line));
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .donate-presets button.is-active {
@@ -1900,12 +1900,12 @@ h2 {
 }
 
 .donate-submit:hover:not(:disabled) {
-  transform: translateY(-1px);
+  transform: none;
   background: color-mix(in srgb, var(--color-inverse-bg) 88%, var(--color-inverse-text));
 }
 
 .donate-submit:active:not(:disabled) {
-  transform: translateY(0);
+  transform: none;
 }
 
 .donate-submit:disabled {

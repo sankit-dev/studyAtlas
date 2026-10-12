@@ -1,0 +1,250 @@
+/* ============================================================================
+   StudyAtlas palette — one look for every tab.
+   Loaded last. Monochrome: near-black in dark mode, warm paper in light mode
+   (never pure white). Colour is reserved for reading highlights.
+   These values match the Books section (src/books.css).
+   ========================================================================== */
+
+:root {
+  /* Primitives, neutralised so any direct use stays on-palette. */
+  --paper-50: #fbfaf5;
+  --paper-100: #f5f3ec;
+  --paper-200: #fbfaf5;
+  --paper-300: #ece9e2;
+  --paper-400: #e3e0d8;
+  --rule: #e3e0d8;
+  --ink-50: #ededed;
+  --ink-200: #c7c7c7;
+  --ink-300: #a3a3a3;
+  --ink-500: #5c5c5c;
+  --ink-600: #4a4a4a;
+  --ink-700: #2e2e2e;
+  --ink-750: #262626;
+  --ink-800: #1c1c1c;
+  --ink-850: #171717;
+  --ink-900: #141414;
+  --ink-950: #0a0a0a;
+  --indigo-700: #141414;
+  --indigo-600: #141414;
+  --indigo-500: #2e2e2e;
+  --indigo-200: #c7c7c7;
+  --moss-600: #141414;
+  --accent-coral: #141414;
+  --accent-coral-soft: #141414;
+  --accent-coral-deep: #141414;
+  --accent-blue: #141414;
+  --accent-green: #141414;
+  --accent-yellow: #141414;
+  --accent-violet: #141414;
+
+  --color-page: #fbfaf5;
+  --color-surface: #f5f3ec;
+  --color-text: #141414;
+  --color-muted: #525252;
+  --color-line: #e3e0d8;
+  --color-soft-line: #ece9e2;
+  --color-shadow: #e3e0d8;
+  --color-accent: #141414;
+  --color-accent-strong: #141414;
+  --color-accent-text: #141414;
+  --color-accent-inverse: #fbfaf5;
+  --color-accent-muted: #525252;
+  --color-success-text: #141414;
+  --color-focus-ring: rgb(20 20 20 / 0.14);
+  --color-inverse-bg: #141414;
+  --color-inverse-text: #fbfaf5;
+  --color-inverse-muted: #a3a3a3;
+
+  --track-coral: #141414;
+  --track-blue: #141414;
+  --track-yellow: #141414;
+  --track-green: #141414;
+  --track-violet: #141414;
+
+  --shadow-lift: none;
+}
+
+:root.dark {
+  --accent-coral: #ededed;
+  --accent-coral-soft: #ededed;
+  --accent-coral-deep: #ededed;
+  --accent-blue: #ededed;
+  --accent-green: #ededed;
+  --accent-yellow: #ededed;
+  --accent-violet: #ededed;
+  --indigo-700: #ededed;
+  --indigo-600: #ededed;
+  --indigo-500: #d4d4d4;
+  --moss-600: #ededed;
+
+  --color-page: #0a0a0a;
+  --color-surface: #111111;
+  --color-text: #ededed;
+  --color-muted: #a1a1a1;
+  --color-line: #262626;
+  --color-soft-line: #1c1c1c;
+  --color-shadow: #000000;
+  --color-accent: #ededed;
+  --color-accent-strong: #ffffff;
+  --color-accent-text: #ededed;
+  --color-accent-inverse: #0a0a0a;
+  --color-accent-muted: #a1a1a1;
+  --color-success-text: #ededed;
+  --color-focus-ring: rgb(255 255 255 / 0.14);
+  --color-inverse-bg: #ededed;
+  --color-inverse-text: #0a0a0a;
+  --color-inverse-muted: #525252;
+
+  --track-coral: #ededed;
+  --track-blue: #ededed;
+  --track-yellow: #ededed;
+  --track-green: #ededed;
+  --track-violet: #ededed;
+}
+
+body {
+  background: var(--color-page);
+}
+
+/* ── Home hero: the night artwork, desaturated ──────────────────────────── */
+
+.page-hero-bg {
+  --color-text: #ededed;
+  --color-muted: #a1a1a1;
+  --color-surface: #111111;
+  --color-line: #333333;
+  --color-soft-line: #262626;
+  --color-inverse-bg: #ededed;
+  --color-inverse-text: #0a0a0a;
+  --color-inverse-muted: #525252;
+  background:
+    radial-gradient(ellipse 66% 92% at 20% 72%, rgb(0 0 0 / 0.72) 0%, rgb(0 0 0 / 0.5) 48%, rgb(0 0 0 / 0) 82%),
+    linear-gradient(180deg, rgb(0 0 0 / 0.78) 0%, rgb(0 0 0 / 0.55) 40%, rgb(0 0 0 / 0.4) 75%, rgb(0 0 0 / 0) 100%);
+  background-color: #0a0a0a;
+}
+
+.page-hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: url('/hero-night.webp') center / cover no-repeat;
+  filter: grayscale(1) brightness(0.34) contrast(1.1);
+  pointer-events: none;
+}
+
+@media (min-aspect-ratio: 4/3) {
+  .page-hero-bg {
+    background:
+      radial-gradient(ellipse 66% 92% at 20% 72%, rgb(0 0 0 / 0.72) 0%, rgb(0 0 0 / 0.5) 48%, rgb(0 0 0 / 0) 82%),
+      linear-gradient(180deg, rgb(0 0 0 / 0.78) 0%, rgb(0 0 0 / 0.55) 40%, rgb(0 0 0 / 0.4) 75%, rgb(0 0 0 / 0) 100%);
+    background-color: #0a0a0a;
+  }
+
+  .page-hero-bg::before {
+    background: url('/hero-night.webp') center bottom / 138% auto no-repeat;
+  }
+}
+
+.page-hero-bg a.button-link.button-link--accent,
+.page-hero-bg a.button-link.button-link--accent:hover {
+  border-color: #ededed;
+  background: #ededed;
+  color: #0a0a0a;
+}
+
+.page-hero-bg a.button-link.button-link--accent:hover {
+  background: #ffffff;
+}
+
+.hero__copy > p:not(.hero__stats) {
+  color: #c4c4c4;
+  text-shadow: 0 1px 16px rgb(0 0 0 / 0.6);
+}
+
+.hero__modes a {
+  color: #a1a1a1;
+  text-decoration-color: rgb(237 237 237 / 0.22);
+}
+
+.hero__modes a:hover,
+.hero__modes a:focus-visible {
+  color: #ededed;
+}
+
+.hero__stats {
+  color: #c4c4c4;
+  text-shadow: 0 1px 14px rgb(0 0 0 / 0.9);
+}
+
+.hero__secondary {
+  border-color: rgb(237 237 237 / 0.28);
+  background: rgb(0 0 0 / 0.35);
+  color: #ededed;
+}
+
+.hero__secondary:hover,
+.hero__secondary:focus-visible {
+  border-color: #ededed;
+  background: rgb(0 0 0 / 0.6);
+}
+
+.hero h1 {
+  text-shadow: 0 1px 30px rgb(0 0 0 / 0.4);
+}
+
+/* ── One voice across tabs ──────────────────────────────────────────────── */
+
+/* Headlines: Newsreader at a regular weight everywhere. */
+.dsa-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+}
+
+.dsa-hero h1 em {
+  margin-top: 0;
+  font-size: 1em;
+  letter-spacing: -0.02em;
+}
+
+/* Small labels: sentence case, sans, no all-caps mono. */
+.dsa-crumb,
+.dsa-kicker,
+.dsa-garden-card__top span,
+.markdown-body .markdown-interview-question__label,
+.markdown-body .markdown-interview-question__answer > span {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Flat surfaces: no glows, no offset shadows, no decorative blobs. */
+.dsa-hero::before,
+.dsa-garden-card::after {
+  display: none;
+}
+
+.dsa-garden-card,
+:root.dark .dsa-garden-card {
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  background: var(--color-surface);
+  box-shadow: none;
+}
+
+.note-reader-content header h1 {
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+/* The hero is always dark, so its accents stay light in both themes. */
+.page-hero-bg {
+  --color-accent: #ededed;
+  --color-accent-strong: #ffffff;
+  --color-accent-text: #ededed;
+  --color-accent-muted: #a1a1a1;
+}

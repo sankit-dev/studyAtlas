@@ -400,7 +400,6 @@ export function BookReader({ book, chapterNumber }: BookReaderProps) {
               editingNoteId={editingNoteId}
               highlights={highlights}
               onCancelNote={() => setEditingNoteId(null)}
-              onEditNote={setEditingNoteId}
               onMarkClick={(id, rect) => {
                 if (window.getSelection()?.isCollapsed === false) return
                 setPopover({ kind: 'mark', id, rect })

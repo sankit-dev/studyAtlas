@@ -7,7 +7,6 @@ type ChapterTextProps = {
   highlights: Highlight[]
   editingNoteId: string | null
   onMarkClick: (id: string, rect: DOMRect) => void
-  onEditNote: (id: string) => void
   onSaveNote: (id: string, note: string) => void
   onCancelNote: () => void
 }
@@ -27,7 +26,8 @@ function renderWithMarks(
         className="bk-mark"
         data-color={mark.color}
         data-hl={mark.id}
-        data-note={mark.note ? 'true' : undefined}
+        data-note={mark.note || undefined}
+        tabIndex={mark.note ? 0 : undefined}
         key={mark.id}
         onClick={(event) =>
           onMarkClick(mark.id, event.currentTarget.getBoundingClientRect())
@@ -94,7 +94,6 @@ export function ChapterText({
   highlights,
   editingNoteId,
   onMarkClick,
-  onEditNote,
   onSaveNote,
   onCancelNote,
 }: ChapterTextProps) {
@@ -105,9 +104,9 @@ export function ChapterText({
           .filter((highlight) => highlight.block === index)
           .sort((a, b) => a.start - b.start)
 
-        const notes = marks.filter(
-          (mark) => mark.note || mark.id === editingNoteId,
-        )
+        // Saved notes show as a bubble on hover; only the one being edited
+        // takes space in the text.
+        const editing = marks.filter((mark) => mark.id === editingNoteId)
 
         let element: ReactNode
         if (block.type === 'h2') {
@@ -131,27 +130,14 @@ export function ChapterText({
         return (
           <Fragment key={index}>
             {element}
-            {notes.map((mark) =>
-              mark.id === editingNoteId ? (
-                <NoteEditor
-                  highlight={mark}
-                  key={mark.id}
-                  onCancel={onCancelNote}
-                  onSave={(note) => onSaveNote(mark.id, note)}
-                />
-              ) : (
-                <button
-                  className="bk-note"
-                  data-color={mark.color}
-                  key={mark.id}
-                  onClick={() => onEditNote(mark.id)}
-                  type="button"
-                >
-                  <span className="bk-note__label">Your note</span>
-                  <span className="bk-note__text">{mark.note}</span>
-                </button>
-              ),
-            )}
+            {editing.map((mark) => (
+              <NoteEditor
+                highlight={mark}
+                key={mark.id}
+                onCancel={onCancelNote}
+                onSave={(note) => onSaveNote(mark.id, note)}
+              />
+            ))}
           </Fragment>
         )
       })}

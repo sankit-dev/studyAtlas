@@ -4,7 +4,6 @@ import { Brand } from './Brand'
 import { useDonation } from '../lib/donation'
 
 const navigationLinks = [
-  { label: 'Roadmap', href: '/#roadmap' },
   { label: 'Library', href: '/library' },
   { label: 'Revise', href: '/library?view=revise' },
   { label: 'DSA', href: '/dsa' },

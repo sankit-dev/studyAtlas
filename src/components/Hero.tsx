@@ -126,8 +126,8 @@ export function Hero({
         <motion.aside
           className="hero__progress"
           aria-label="Your learning path"
-          initial={reducedMotion ? false : { opacity: 0, y: 22 }}
-          animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
+          initial={reducedMotion ? false : { opacity: 0 }}
+          animate={reducedMotion ? undefined : { opacity: 1 }}
           transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1], delay: 0.4 }}
         >
           {canRevise && (

@@ -519,8 +519,8 @@ export function NoteReader({
           <motion.article
             className="note-reader-content min-w-0"
             key={note.slug}
-            initial={reducedMotion ? false : { opacity: 0, y: 12 }}
-            animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
+            initial={reducedMotion ? false : { opacity: 0 }}
+            animate={reducedMotion ? undefined : { opacity: 1 }}
             transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
           >
             <header className="mb-10 max-w-205">
@@ -547,7 +547,7 @@ export function NoteReader({
                   </li>
                 </ol>
               </nav>
-              <h1 className="m-0 max-w-205 text-[clamp(34px,4.8vw,56px)] font-bold leading-[1.02] tracking-normal">
+              <h1 className="m-0 max-w-205 text-[clamp(34px,4.8vw,56px)] font-medium leading-[1.04] tracking-[-0.015em]">
                 {note.title}
               </h1>
               <p className="mt-6 mb-0 text-base leading-[1.8] text-(--color-muted)">

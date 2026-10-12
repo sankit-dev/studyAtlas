@@ -12,11 +12,12 @@ export const fastTransition: Transition = {
   ease: motionEase,
 }
 
+// Kept under its old name so call sites don't change; content fades in
+// place and never rises.
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 18 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
     transition: defaultTransition,
   },
 }

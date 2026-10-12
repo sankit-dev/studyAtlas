@@ -518,17 +518,16 @@ button {
   /* A soft dark breath behind the copy/buttons zone lifts light text off the
      bright field without dimming the artwork as a whole. */
   background:
-    radial-gradient(ellipse 62% 20% at 50% 38%, rgb(5 7 11 / 0.45), transparent 70%),
-    url('/hero-night.webp') center / cover no-repeat;
+    radial-gradient(ellipse 62% 20% at 50% 38%, rgb(0 0 0 / 0.45), transparent 70%);
 
   /* The hero artwork is a night scene, so this region always uses the dark
      palette — text stays readable in both site themes. */
   --color-text: var(--ink-50);
-  --color-muted: #9aa3b0;
-  --color-surface: #1c222c;
-  --color-line: #2e3644;
-  --color-soft-line: #252c38;
-  --color-shadow: #05070b;
+  --color-muted: #a1a1a1;
+  --color-surface: #111111;
+  --color-line: #333333;
+  --color-soft-line: #262626;
+  --color-shadow: #000000;
   --color-inverse-bg: var(--ink-50);
   --color-inverse-text: var(--ink-900);
   --color-inverse-muted: var(--ink-600);
@@ -540,8 +539,7 @@ button {
 @media (min-aspect-ratio: 4/3) {
   .page-hero-bg {
     background:
-      radial-gradient(ellipse 62% 20% at 50% 38%, rgb(5 7 11 / 0.45), transparent 70%),
-      url('/hero-night.webp') center bottom / 138% auto no-repeat;
+      radial-gradient(ellipse 62% 20% at 50% 38%, rgb(0 0 0 / 0.45), transparent 70%);
   }
 }
 
@@ -843,7 +841,7 @@ button {
 .focused-learning__steps li:hover {
   border-color: color-mix(in srgb, var(--color-accent-strong) 34%, var(--color-line));
   background: color-mix(in srgb, var(--color-surface) 92%, var(--color-accent-strong));
-  transform: translateY(-2px);
+  transform: none;
 }
 
 .focused-learning__steps span,
@@ -1082,7 +1080,7 @@ button {
   border-color: var(--accent-green);
   background: color-mix(in srgb, var(--accent-green) 9%, transparent);
   color: var(--color-text);
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .dsa-practice-bridge__patterns {
@@ -1109,7 +1107,7 @@ button {
 .dsa-practice-bridge__patterns a:hover {
   border-color: color-mix(in srgb, var(--accent-green) 60%, var(--color-line));
   background: color-mix(in srgb, var(--accent-green) 7%, transparent);
-  transform: translateY(-2px);
+  transform: none;
 }
 
 .dsa-practice-bridge__patterns span {
@@ -1132,12 +1130,12 @@ button {
 @keyframes heroMapIn {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: none;
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 
@@ -1554,7 +1552,7 @@ button {
   background: color-mix(in srgb, var(--color-surface) 92%, transparent);
   color: var(--color-text);
   box-shadow: 0 6px 20px color-mix(in srgb, var(--color-accent-strong) 18%, transparent);
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .note-focus-reading-toggle:hover svg {
@@ -1570,8 +1568,8 @@ button {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #34d399;
-  box-shadow: 0 0 8px #34d399;
+  background: var(--color-text);
+  box-shadow: none;
   animation: focusDotPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
@@ -1866,7 +1864,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   background: var(--color-accent-strong);
   box-shadow: 0 14px 34px color-mix(in srgb, var(--color-accent-strong) 24%, transparent);
   color: var(--solid-white);
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .note-sidebar-link[data-completed='true'] {
@@ -1894,7 +1892,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
     var(--color-surface);
   border-color: var(--color-accent-strong);
   box-shadow: 0 12px 30px color-mix(in srgb, var(--color-shadow) 58%, transparent);
-  transform: translateY(-2px);
+  transform: none;
 }
 
 .note-route-transition {
@@ -2024,24 +2022,24 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 
 .markdown-body .markdown-interview-question {
   margin: 22px 0 30px;
-  border: 1px solid color-mix(in srgb, #ff5c45 58%, var(--color-line));
-  border-left: 4px solid #ff755f;
+  border: 1px solid var(--color-line);
+  border-left: 3px solid var(--color-text);
   border-radius: 8px;
   background:
     linear-gradient(
       135deg,
-      color-mix(in srgb, #ff755f 14%, var(--color-surface)),
-      color-mix(in srgb, #d83b2d 8%, var(--color-surface)) 48%,
+      var(--color-surface),
+      var(--color-surface) 48%,
       var(--color-surface)
     );
-  box-shadow: inset 0 1px 0 color-mix(in srgb, #ffb199 24%, transparent);
+  box-shadow: none;
   padding: 18px 20px;
 }
 
 .markdown-body .markdown-interview-question__label,
 .markdown-body .markdown-interview-question__answer > span {
   display: block;
-  color: #ff755f;
+  color: var(--color-muted);
   font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 11px;
   font-weight: 800;
@@ -2059,7 +2057,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 }
 
 .markdown-body .markdown-interview-question__answer {
-  border-top: 1px solid color-mix(in srgb, #ff755f 32%, var(--color-line));
+  border-top: 1px solid var(--color-line);
   padding-top: 13px;
 }
 
@@ -2131,7 +2129,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 
 .markdown-body .markdown-diagram__arrow,
 .markdown-body .markdown-diagram__sequence li > span:nth-child(2) {
-  color: #ff755f;
+  color: var(--color-muted);
   font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 12px;
   font-weight: 800;
@@ -2329,7 +2327,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   margin: 18px 0 32px;
   border: 1px solid var(--color-line);
   border-radius: 9px;
-  background: #0d1117;
+  background: #111111;
 }
 
 .markdown-code-block__highlight {
@@ -2354,9 +2352,9 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 .markdown-code-block > header button {
   border: 1px solid #30363d;
   border-radius: 5px;
-  background: #161b22;
+  background: #1a1a1a;
   padding: 5px 9px;
-  color: #c9d1d9;
+  color: #d4d4d4;
   font: inherit;
   letter-spacing: 0;
   text-transform: none;
@@ -2367,7 +2365,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 .markdown-code-block > header button:hover,
 .markdown-code-block > header button:focus-visible {
   border-color: var(--color-accent-strong);
-  background: #21262d;
+  background: #262626;
   color: #ffffff;
   outline: none;
 }
@@ -2382,7 +2380,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   border: 0;
   border-radius: 0;
   padding: 16px 26px 20px;
-  background: #0d1117 !important;
+  background: #111111 !important;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   word-break: break-word;
@@ -2396,7 +2394,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 }
 
 .markdown-code-block pre {
-  color: #c9d1d9;
+  color: #d4d4d4;
 }
 
 .markdown-body .markdown-code-block pre code,
@@ -2492,15 +2490,15 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 }
 
 :root.dark .note-reader-shell {
-  --color-page: #111820;
-  --color-surface: #151d27;
-  --color-text: #ece7dd;
-  --color-muted: #a7afba;
-  --color-line: #26313d;
-  --color-soft-line: #202a35;
-  --reader-body: #d5d0c7;
+  --color-page: #0a0a0a;
+  --color-surface: #111111;
+  --color-text: #ededed;
+  --color-muted: #a1a1a1;
+  --color-line: #262626;
+  --color-soft-line: #1c1c1c;
+  --reader-body: #d4d4d4;
   --reader-muted: #8e98a5;
-  --reader-soft-line: #202a35;
+  --reader-soft-line: #1c1c1c;
 }
 
 .note-reader-grid {
@@ -2841,7 +2839,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   gap: 7px;
   visibility: hidden;
   opacity: 0;
-  transform: translateY(12px) scale(0.94);
+  transform: scale(0.96);
   transform-origin: 22px calc(100% + 8px);
   border: 1px solid color-mix(in srgb, var(--color-line) 80%, transparent);
   border-radius: 12px;
@@ -2875,7 +2873,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 .markdown-concept-term[data-pinned='true'] .markdown-concept-popover {
   visibility: visible;
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: scale(1);
   pointer-events: auto;
 }
 
@@ -3013,14 +3011,14 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   margin: 28px 0 40px;
   border-color: color-mix(in srgb, var(--color-line) 55%, transparent);
   border-radius: 10px;
-  background: #0c1117;
+  background: #111111;
   box-shadow: 0 18px 44px color-mix(in srgb, #000 24%, transparent);
 }
 
 .markdown-code-block > header {
   min-height: 38px;
-  border-bottom-color: #232b35;
-  color: #8d98a6;
+  border-bottom-color: #262626;
+  color: #8a8a8a;
 }
 
 .markdown-body .markdown-code-block pre,
@@ -3032,7 +3030,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   border: 0 !important;
   border-radius: 0 !important;
   padding: 16px 26px 20px;
-  background: #0c1117 !important;
+  background: #111111 !important;
 }
 
 .markdown-body .markdown-code-block pre code,
@@ -3043,7 +3041,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   border: 0;
   background: transparent;
   padding: 0;
-  color: #d7dde5;
+  color: #d4d4d4;
   font-size: 14px;
   line-height: 1.78;
 }
@@ -3328,36 +3326,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   }
 }
 
-/* DSA garden: scoped tokens keep this course visually distinct from the library. */
-.dsa-page-shell {
-  --color-page: #eef7f3;
-  --color-text: #173b45;
-  --color-muted: #58747a;
-  --color-surface: #fbfefc;
-  --color-line: #c9ded4;
-  --color-soft-line: #deece5;
-  --color-shadow: #bed7cb;
-  --color-accent: #2a7a63;
-  --color-accent-strong: #1f8066;
-  --color-inverse-bg: #173b45;
-  --color-inverse-text: #f4fcf7;
-  --color-inverse-muted: #b3d0c5;
-}
-
-:root.dark .dsa-page-shell {
-  --color-page: #0d272d;
-  --color-text: #e9f8ef;
-  --color-muted: #a9c9c0;
-  --color-surface: #13353a;
-  --color-line: #2a5252;
-  --color-soft-line: #20454a;
-  --color-shadow: #07191e;
-  --color-accent: #9bd3b0;
-  --color-accent-strong: #a9ddb8;
-  --color-inverse-bg: #e9f8ef;
-  --color-inverse-text: #0d272d;
-  --color-inverse-muted: #52736f;
-}
+/* DSA uses the site palette like every other tab. */
 
 .dsa-course {
   overflow: hidden;
@@ -3384,9 +3353,9 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   height: 540px;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 35% 38%, color-mix(in srgb, #f4c979 48%, transparent) 0 3px, transparent 4px),
-    radial-gradient(circle at 68% 28%, color-mix(in srgb, #72a8c7 44%, transparent) 0 4px, transparent 5px),
-    radial-gradient(circle at center, color-mix(in srgb, #a8d6b3 42%, transparent), transparent 65%);
+    radial-gradient(circle at 35% 38%, color-mix(in srgb, var(--color-text) 48%, transparent) 0 3px, transparent 4px),
+    radial-gradient(circle at 68% 28%, color-mix(in srgb, var(--color-text) 44%, transparent) 0 4px, transparent 5px),
+    radial-gradient(circle at center, color-mix(in srgb, var(--color-text) 42%, transparent), transparent 65%);
   content: '';
   pointer-events: none;
 }
@@ -3437,7 +3406,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 .dsa-hero h1 em {
   display: block;
   margin-top: 8px;
-  color: #4e91a6;
+  color: var(--color-text);
   font-family: var(--font-display);
   font-size: 1.06em;
   font-weight: 400;
@@ -3483,7 +3452,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 
 .dsa-button--primary:hover {
   box-shadow: 0 13px 22px color-mix(in srgb, var(--color-shadow) 70%, transparent);
-  transform: translateY(-2px);
+  transform: none;
 }
 
 .dsa-text-link {
@@ -3495,10 +3464,10 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 
 .dsa-garden-card {
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--color-line) 88%, #72a8c7);
+  border: 1px solid color-mix(in srgb, var(--color-line) 88%, var(--color-text));
   border-radius: 28px 28px 28px 8px;
   background:
-    linear-gradient(148deg, color-mix(in srgb, var(--color-surface) 82%, #d8f0e2), var(--color-surface));
+    linear-gradient(148deg, color-mix(in srgb, var(--color-surface) 82%, var(--color-soft-line)), var(--color-surface));
   box-shadow: 18px 21px 0 color-mix(in srgb, var(--color-shadow) 58%, transparent);
   padding: 30px;
 }
@@ -3554,8 +3523,8 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   height: 45px;
   place-items: center;
   border-radius: 50% 50% 45% 55%;
-  background: #f4c979;
-  color: #173b45;
+  background: var(--color-text);
+  color: var(--color-page);
   font-size: 20px;
   transform: rotate(-12deg);
 }
@@ -3572,7 +3541,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #9bd3b0, #4e91a6);
+  background: linear-gradient(90deg, var(--color-text), var(--color-text));
   transition: width 300ms var(--motion-ease);
 }
 
@@ -3608,9 +3577,9 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 }
 
 .dsa-garden-path > div[data-complete='true'] span {
-  border-color: #6fb38c;
-  background: #6fb38c;
-  color: #123a31;
+  border-color: var(--color-text);
+  background: var(--color-text);
+  color: var(--color-page);
 }
 
 .dsa-garden-path p,
@@ -3665,7 +3634,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 }
 
 .dsa-principles span {
-  color: #4e91a6;
+  color: var(--color-text);
   font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 11px;
   font-weight: 900;
@@ -3696,13 +3665,13 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   min-height: 100%;
   border-right: 1px solid var(--color-line);
   background:
-    linear-gradient(180deg, color-mix(in srgb, #dcefe4 68%, transparent), transparent 55%),
-    color-mix(in srgb, var(--color-surface) 92%, #dcefe4);
+    linear-gradient(180deg, color-mix(in srgb, var(--color-soft-line) 68%, transparent), transparent 55%),
+    color-mix(in srgb, var(--color-surface) 92%, var(--color-soft-line));
   padding: 28px 24px;
 }
 
 .dsa-focus__number {
-  color: #4e91a6;
+  color: var(--color-text);
   font-family: var(--font-display);
   font-size: 66px;
   line-height: 0.85;
@@ -3809,9 +3778,9 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   gap: 20px;
   align-items: center;
   margin-top: 20px;
-  border: 1px solid color-mix(in srgb, #72a8c7 38%, var(--color-line));
+  border: 1px solid color-mix(in srgb, var(--color-text) 38%, var(--color-line));
   border-radius: 12px;
-  background: color-mix(in srgb, #dceffa 32%, var(--color-surface));
+  background: color-mix(in srgb, var(--color-soft-line) 32%, var(--color-surface));
   padding: 16px 18px;
 }
 
@@ -3826,7 +3795,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 .dsa-review-list button {
   border: 0;
   background: transparent;
-  color: #39778d;
+  color: var(--color-text);
   font-size: 12px;
   font-weight: 850;
   white-space: nowrap;
@@ -3844,7 +3813,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   justify-content: space-between;
   margin-top: 20px;
   border-radius: 12px;
-  background: color-mix(in srgb, #f4c979 19%, var(--color-surface));
+  background: color-mix(in srgb, var(--color-text) 19%, var(--color-surface));
   padding: 17px 18px;
 }
 
@@ -3863,9 +3832,9 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   display: inline-flex;
   gap: 7px;
   align-items: center;
-  border: 1px solid color-mix(in srgb, #c79e4d 55%, var(--color-line));
+  border: 1px solid color-mix(in srgb, var(--color-muted) 55%, var(--color-line));
   border-radius: 999px;
-  color: #765719;
+  color: var(--color-text);
   cursor: pointer;
   font-size: 12px;
   font-weight: 850;
@@ -3897,7 +3866,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 
 .dsa-try-card code {
   border-radius: 4px;
-  background: color-mix(in srgb, #f4c979 30%, transparent);
+  background: color-mix(in srgb, var(--color-text) 30%, transparent);
   padding: 1px 4px;
   color: var(--color-text);
   font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -3964,8 +3933,8 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 
 .dsa-hint-ladder li[data-revealed='true'] {
   border-style: solid;
-  border-color: color-mix(in srgb, #72a8c7 46%, var(--color-line));
-  background: color-mix(in srgb, #dceffa 34%, var(--color-surface));
+  border-color: color-mix(in srgb, var(--color-text) 46%, var(--color-line));
+  background: color-mix(in srgb, var(--color-soft-line) 34%, var(--color-surface));
 }
 
 .dsa-hint-ladder li > span {
@@ -3982,8 +3951,8 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 }
 
 .dsa-hint-ladder li[data-revealed='true'] > span {
-  background: #72a8c7;
-  color: #163944;
+  background: var(--color-text);
+  color: var(--color-page);
 }
 
 .dsa-hint-ladder li p {
@@ -3999,7 +3968,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 
 .dsa-interview-cue {
   margin-top: 18px;
-  border-left: 3px solid #9bd3b0;
+  border-left: 3px solid var(--color-text);
   padding: 7px 0 7px 17px;
 }
 
@@ -4052,31 +4021,31 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 }
 
 .dsa-outcome-button:hover {
-  transform: translateY(-2px);
+  transform: none;
 }
 
 .dsa-outcome-button--solved[aria-pressed='true'],
 .dsa-outcome-button--solved:hover {
-  border-color: #69ab83;
-  background: color-mix(in srgb, #9bd3b0 42%, transparent);
+  border-color: var(--color-text);
+  background: color-mix(in srgb, var(--color-text) 42%, transparent);
 }
 
 .dsa-outcome-button--guided[aria-pressed='true'],
 .dsa-outcome-button--guided:hover {
-  border-color: #72a8c7;
-  background: color-mix(in srgb, #dceffa 82%, transparent);
+  border-color: var(--color-text);
+  background: color-mix(in srgb, var(--color-soft-line) 82%, transparent);
 }
 
 .dsa-outcome-button--review[aria-pressed='true'],
 .dsa-outcome-button--review:hover {
-  border-color: #d4ad5b;
-  background: color-mix(in srgb, #f4c979 42%, transparent);
+  border-color: var(--color-text);
+  background: color-mix(in srgb, var(--color-text) 42%, transparent);
 }
 
 .dsa-locked-message {
   grid-column: 1 / -1;
   margin: 0;
-  color: #91682a;
+  color: var(--color-muted);
   font-size: 12px;
   font-weight: 700;
 }
@@ -4092,7 +4061,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 }
 
 .dsa-next-quest:hover {
-  color: #4e91a6;
+  color: var(--color-text);
 }
 
 .dsa-review-section {
@@ -4187,7 +4156,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   height: 40px;
   place-items: center;
   border-radius: 50%;
-  background: color-mix(in srgb, #9bd3b0 38%, transparent);
+  background: color-mix(in srgb, var(--color-text) 38%, transparent);
   color: var(--color-accent-text);
 }
 
@@ -4309,7 +4278,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 }
 
 .dsa-section-card li[data-active='true'] {
-  background: color-mix(in srgb, #dceffa 33%, var(--color-surface));
+  background: color-mix(in srgb, var(--color-soft-line) 33%, var(--color-surface));
 }
 
 .dsa-section-card li[data-locked='true'] {
@@ -4330,9 +4299,9 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 }
 
 .dsa-section-card li[data-complete='true'] .dsa-map-quest__number {
-  border-color: color-mix(in srgb, #69ab83 50%, var(--color-line));
-  background: color-mix(in srgb, #9bd3b0 46%, transparent);
-  color: #1a5141;
+  border-color: color-mix(in srgb, var(--color-text) 50%, var(--color-line));
+  background: color-mix(in srgb, var(--color-text) 46%, transparent);
+  color: var(--color-page);
 }
 
 .dsa-section-card li button {
@@ -4380,7 +4349,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   bottom: 12px;
   max-width: calc(100% - 30px);
   overflow: hidden;
-  color: #4e91a6;
+  color: var(--color-text);
   font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 9px;
   font-style: normal;
@@ -4433,30 +4402,30 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
 :root.dark .dsa-bridge-card button,
 :root.dark .dsa-review-list button,
 :root.dark .dsa-section-card li em {
-  color: #91c9de;
+  color: var(--color-text);
 }
 
 :root.dark .dsa-garden-card {
-  background: linear-gradient(148deg, color-mix(in srgb, var(--color-surface) 75%, #19483c), var(--color-surface));
+  background: linear-gradient(148deg, color-mix(in srgb, var(--color-surface) 75%, var(--color-soft-line)), var(--color-surface));
 }
 
 :root.dark .dsa-focus__rail {
-  background: linear-gradient(180deg, color-mix(in srgb, #19483c 65%, transparent), transparent 55%), var(--color-surface);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-soft-line) 65%, transparent), transparent 55%), var(--color-surface);
 }
 
 :root.dark .dsa-bridge-card,
 :root.dark .dsa-hint-ladder li[data-revealed='true'],
 :root.dark .dsa-section-card li[data-active='true'] {
-  background: color-mix(in srgb, #1c4654 62%, var(--color-surface));
+  background: color-mix(in srgb, var(--color-soft-line) 62%, var(--color-surface));
 }
 
 :root.dark .dsa-try-card {
-  background: color-mix(in srgb, #705d2e 30%, var(--color-surface));
+  background: color-mix(in srgb, var(--color-soft-line) 30%, var(--color-surface));
 }
 
 :root.dark .dsa-try-card a,
 :root.dark .dsa-try-card summary {
-  color: #f2cd79;
+  color: var(--color-text);
 }
 
 @media (max-width: 980px) {
@@ -4751,7 +4720,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   background: color-mix(in srgb, var(--color-accent-strong) 88%, #000);
   border-color: color-mix(in srgb, var(--color-accent-strong) 88%, #000);
   color: var(--solid-white);
-  transform: translateY(-1px);
+  transform: none;
 }
 
 :root.dark .button-link--accent {
@@ -4764,7 +4733,7 @@ body.is-focus-reading nav[aria-label='Primary navigation'] {
   background: color-mix(in srgb, var(--color-accent-strong) 88%, #000);
   border-color: color-mix(in srgb, var(--color-accent-strong) 88%, #000);
   color: var(--solid-white);
-  transform: translateY(-1px);
+  transform: none;
 }
 
 @media (max-width: 980px) {

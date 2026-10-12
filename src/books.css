@@ -42,13 +42,13 @@ html:not(.dark) .bk-root {
   --bk-line: #e3e0d8;
   --bk-line-soft: #ece9e2;
   --bk-hover: #cfccc4;
-  --bk-text: #12161f;
-  --bk-muted: #4d5868;
-  --bk-dim: #68707d;
+  --bk-text: #141414;
+  --bk-muted: #525252;
+  --bk-dim: #737373;
   --bk-hover-bg: #f0eee6;
   --bk-raised: #ece9e2;
   --bk-primary-hover: #000000;
-  --bk-grid-line: rgba(18, 22, 31, 0.06);
+  --bk-grid-line: rgba(20, 20, 20, 0.06);
 }
 
 .bk-root {
@@ -907,10 +907,50 @@ html:not(.dark) .bk-root {
 .bk-mark[data-color='blue'] { background: var(--hl-blue); }
 .bk-mark[data-color='pink'] { background: var(--hl-pink); }
 
-.bk-mark[data-note='true'] {
+.bk-mark[data-note] {
+  position: relative;
   text-decoration: underline dotted;
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
+}
+
+/* Note bubble: appears above the highlight on hover or keyboard focus. */
+.bk-mark[data-note]::after {
+  content: attr(data-note);
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  z-index: 25;
+  width: max-content;
+  max-width: min(320px, 80vw);
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #2e2e2e;
+  border-left: 3px solid var(--hl-yellow-dot);
+  background: #1a1a1a;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  color: #ededed;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  text-decoration: none;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 160ms ease, visibility 160ms;
+}
+
+.bk-mark[data-note][data-color='green']::after { border-left-color: var(--hl-green-dot); }
+.bk-mark[data-note][data-color='blue']::after { border-left-color: var(--hl-blue-dot); }
+.bk-mark[data-note][data-color='pink']::after { border-left-color: var(--hl-pink-dot); }
+
+.bk-mark[data-note]:hover::after,
+.bk-mark[data-note]:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 120ms;
 }
 
 /* Notes */

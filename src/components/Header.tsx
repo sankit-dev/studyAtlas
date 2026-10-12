@@ -5,7 +5,6 @@ import { useDonation } from '../lib/donation'
 
 const navigationLinks = [
   { label: 'Library', href: '/library' },
-  { label: 'Revise', href: '/library?view=revise' },
   { label: 'DSA', href: '/dsa' },
   { label: 'Books', href: '/books' },
 ] as const
@@ -34,12 +33,8 @@ export function Header({ onThemeToggle, theme }: HeaderProps) {
   }, [])
 
   const getIsActive = (href: string) => {
-    if (href === '/library?view=revise') {
-      return activePath === href
-    }
-
     if (href === '/library') {
-      return activePath === '/library'
+      return activePath === '/library' || activePath.startsWith('/library?')
     }
 
     if (href === '/books') {

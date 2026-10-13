@@ -20,24 +20,26 @@ const NoteReader = lazy(() =>
 const Roadmap = lazy(() =>
   import('./components/Roadmap').then((m) => ({ default: m.Roadmap })),
 )
-const Support = lazy(() =>
-  import('./components/Support').then((m) => ({ default: m.Support })),
+const BooksApp = lazy(() =>
+  import('./components/books/BooksApp').then((m) => ({ default: m.BooksApp })),
 )
 import {
   getCurrentLearningStep,
+  getLearningPathSteps,
   getLastCompletedNote,
   getOverallProgress,
 } from './data/learningPath'
 import { authClient } from './lib/auth'
+import { useRoute } from './hooks/useRoute'
 import {
   fetchCompletedNoteSlugs,
   markNoteComplete,
   syncCompletedNoteSlugs,
 } from './lib/noteProgress'
 import {
+  getBooksRoute,
   getDsaQuestIdFromPath,
   getNoteSlugFromPath,
-  getPathname,
   isDsaPath,
   isLibraryPath,
   navigateTo,
@@ -92,14 +94,6 @@ function getInitialCompletedNotes() {
   }
 }
 
-function getInitialPathname() {
-  if (typeof window === 'undefined') {
-    return '/'
-  }
-
-  return redirectLegacyHash() ?? getPathname()
-}
-
 function scrollToPageTop() {
   document.documentElement.scrollTop = 0
   document.body.scrollTop = 0
@@ -113,7 +107,9 @@ type NoteNavigationOptions = {
 function App() {
   const { data: session } = authClient.useSession()
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
-  const [pathname, setPathname] = useState(getInitialPathname)
+  redirectLegacyHash()
+  const activePath = useRoute()
+  const pathname = activePath.split('?')[0]
   const [completedNoteSlugs, setCompletedNoteSlugs] = useState(
     getInitialCompletedNotes,
   )
@@ -127,6 +123,8 @@ function App() {
   const activeDsaQuestId = getDsaQuestIdFromPath(pathname)
   const isDsa = isDsaPath(pathname)
   const isLibrary = isLibraryPath(pathname)
+  const booksRoute = getBooksRoute(pathname)
+  const booksRouteKind = booksRoute?.kind
   const activeNoteMatch = tracks
     .flatMap((track) =>
       flattenNotes(track.topics).map((note) => ({
@@ -214,18 +212,6 @@ function App() {
     )
   }, [completedNoteSlugs])
 
-  useEffect(() => {
-    const syncRoute = () => {
-      // Catch legacy #/ links pasted/bookmarked after initial load.
-      const legacy = redirectLegacyHash()
-      setPathname(legacy ?? getPathname())
-    }
-
-    window.addEventListener('popstate', syncRoute)
-
-    return () => window.removeEventListener('popstate', syncRoute)
-  }, [])
-
   // SPA navigation for same-origin <a href="/notes/..."> clicks.
   // Keeps crawlable hrefs while avoiding full page reloads.
   useEffect(() => {
@@ -250,7 +236,23 @@ function App() {
 
   // Per-route SEO: title, description, canonical, OG + page_view.
   useEffect(() => {
-    if (activeNoteMatch) {
+    if (booksRouteKind) {
+      updateSeo(
+        booksRouteKind === 'pricing'
+          ? {
+              title: 'Pricing',
+              description:
+                'One plan for every StudyAtlas book: all current and future books, the newsletter and new-book emails.',
+              path: '/pricing',
+            }
+          : {
+              title: 'Books',
+              description:
+                'StudyAtlas books for engineering interviews. Read in the browser, highlight, take notes and pick up where you left off.',
+              path: pathname,
+            },
+      )
+    } else if (activeNoteMatch) {
       updateSeo({
         title: activeNoteMatch.note.title,
         description: activeNoteMatch.note.description,
@@ -285,7 +287,7 @@ function App() {
         path: '/',
       })
     }
-  }, [pathname, activeNoteMatch, isLibrary, isDsa])
+  }, [pathname, activeNoteMatch, isLibrary, isDsa, booksRouteKind])
 
   useEffect(() => {
     if (!session?.user || hasLoadedRemoteProgress.current) {
@@ -340,10 +342,36 @@ function App() {
     [],
   )
 
+  if (booksRoute) {
+    return (
+      <>
+        <Suspense fallback={<div className="min-h-svh bg-(--color-page)" />}>
+          <BooksApp
+            header={
+              <Header
+                activePath={activePath}
+                theme={theme}
+                onThemeToggle={() =>
+                  setTheme((currentTheme) =>
+                    currentTheme === 'light' ? 'dark' : 'light',
+                  )
+                }
+              />
+            }
+            route={booksRoute}
+          />
+        </Suspense>
+        <SpeedInsights />
+        <Analytics />
+      </>
+    )
+  }
+
   return (
     <PageShell variant={isDsa ? 'dsa' : 'default'}>
       {!isLanding && (
         <Header
+          activePath={activePath}
           theme={theme}
           onThemeToggle={() =>
             setTheme((currentTheme) =>
@@ -381,6 +409,7 @@ function App() {
         <>
           <div className="page-hero-bg">
             <Header
+              activePath={activePath}
               theme={theme}
               onThemeToggle={() =>
                 setTheme((currentTheme) =>
@@ -391,6 +420,7 @@ function App() {
             <main>
               <Hero
                 currentStep={currentLearningStep}
+                pathSteps={getLearningPathSteps(completedNoteSlugs)}
                 lastCompletedNote={lastCompletedNote}
                 overallProgress={overallProgress}
               />
@@ -398,7 +428,6 @@ function App() {
           </div>
           <Suspense fallback={<div className="min-h-40" />}>
             <Roadmap completedNoteSlugs={completedNoteSlugs} />
-            <Support />
           </Suspense>
           <Footer />
         </>

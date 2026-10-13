@@ -4,28 +4,14 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Fonts are self-hosted (see src/fonts.css). The hero artwork is a CSS
-         background the browser would only discover after the stylesheet, so
-         preload it, on the home page only. -->
-    <script>
-      if (location.pathname === '/') {
-        var hero = document.createElement('link');
-        hero.rel = 'preload';
-        hero.as = 'image';
-        hero.type = 'image/webp';
-        hero.href = '/hero-night.webp';
-        hero.setAttribute('fetchpriority', 'high');
-        document.head.appendChild(hero);
-      }
-    </script>
-    <meta name="theme-color" content="#0f1730" />
+    <meta name="theme-color" content="#0c0c0c" />
     <meta property="og:site_name" content="StudyAtlas" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:image" content="__SITE_URL__/hero-night.webp" />
+    <meta property="og:image" content="__SITE_URL__/hero-night-bw.webp" />
     <meta property="og:image:width" content="1672" />
     <meta property="og:image:height" content="941" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="__SITE_URL__/hero-night.webp" />
+    <meta name="twitter:image" content="__SITE_URL__/hero-night-bw.webp" />
     <meta
       name="description"
       content="StudyAtlas - backend engineering notes, in the right order."

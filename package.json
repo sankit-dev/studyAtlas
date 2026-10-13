@@ -21,6 +21,7 @@
     "@vercel/speed-insights": "^2.0.0",
     "better-auth": "^1.7.7",
     "framer-motion": "^13.1.1",
+    "lenis": "^1.1.20",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "shiki": "^4.4.3"

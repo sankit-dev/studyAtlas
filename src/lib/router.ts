@@ -3,6 +3,40 @@ export function getPathname(): string {
   return window.location.pathname
 }
 
+export function getLocationPath(): string {
+  if (typeof window === 'undefined') return '/'
+  return window.location.pathname + window.location.search
+}
+
+const routeSubscribers = new Set<() => void>()
+let isListeningToHistory = false
+
+function notifyRouteSubscribers() {
+  routeSubscribers.forEach((subscriber) => subscriber())
+}
+
+function startListeningToHistory() {
+  if (isListeningToHistory || typeof window === 'undefined') return
+  window.addEventListener('popstate', notifyRouteSubscribers)
+  isListeningToHistory = true
+}
+
+function stopListeningToHistory() {
+  if (!isListeningToHistory || routeSubscribers.size > 0) return
+  window.removeEventListener('popstate', notifyRouteSubscribers)
+  isListeningToHistory = false
+}
+
+export function subscribeToRoute(subscriber: () => void) {
+  routeSubscribers.add(subscriber)
+  startListeningToHistory()
+
+  return () => {
+    routeSubscribers.delete(subscriber)
+    stopListeningToHistory()
+  }
+}
+
 export function navigateTo(path: string) {
   if (typeof window === 'undefined') return
   if (window.location.pathname + window.location.search === path) {
@@ -10,6 +44,12 @@ export function navigateTo(path: string) {
     return
   }
   window.history.pushState(null, '', path)
+  window.dispatchEvent(new PopStateEvent('popstate'))
+}
+
+export function replaceRoute(path: string) {
+  if (typeof window === 'undefined' || getLocationPath() === path) return
+  window.history.replaceState(null, '', path)
   window.dispatchEvent(new PopStateEvent('popstate'))
 }
 
@@ -55,4 +95,26 @@ export function isDsaPath(pathname: string) {
 
 export function isLibraryPath(pathname: string) {
   return pathname === '/library'
+}
+
+export type BooksRoute =
+  | { kind: 'catalogue' }
+  | { kind: 'pricing' }
+  | { kind: 'book'; slug: string }
+  | { kind: 'read'; slug: string; chapter: number }
+
+/** /books, /books/:slug, /books/:slug/read/:chapter and /pricing. */
+export function getBooksRoute(pathname: string): BooksRoute | null {
+  const path = pathname.replace(/\/+$/, '') || '/'
+  if (path === '/pricing') return { kind: 'pricing' }
+  if (path === '/books') return { kind: 'catalogue' }
+  if (!path.startsWith('/books/')) return null
+
+  const [slug, segment, chapter] = path.slice('/books/'.length).split('/')
+  if (!slug) return { kind: 'catalogue' }
+  if (segment === 'read') {
+    const number = Number.parseInt(chapter ?? '', 10)
+    return { kind: 'read', slug, chapter: Number.isFinite(number) ? number : 1 }
+  }
+  return { kind: 'book', slug }
 }

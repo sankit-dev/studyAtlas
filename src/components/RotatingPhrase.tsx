@@ -43,11 +43,11 @@ export function RotatingPhrase({
       </span>
       <AnimatePresence initial={false} mode="wait">
         <motion.span
-          animate={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1 }}
           aria-hidden="true"
           className="rotating-phrase__current"
-          exit={{ opacity: 0, y: -8 }}
-          initial={{ opacity: 0, y: 8 }}
+          exit={{ opacity: 0 }}
+          initial={{ opacity: 0 }}
           key={visiblePhrase}
           transition={{ duration: 0.35, ease: motionEase }}
         >

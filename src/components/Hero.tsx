@@ -5,6 +5,7 @@ import type { LearningPathStep } from '../data/learningPath'
 import { flattenNotes, totalNoteCount, tracks } from '../data/tracks'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 import { ButtonLink } from './Button'
+import { HeroConstellation } from './HeroConstellation'
 import { fadeUp, motionProps, staggerContainer } from './motion'
 import { Wrap } from './PageShell'
 import { RotatingPhrase } from './RotatingPhrase'
@@ -32,6 +33,7 @@ const mustKnowCount = tracks.reduce(
 
 type HeroProps = {
   currentStep: LearningPathStep
+  pathSteps: LearningPathStep[]
   lastCompletedNote?: Note
   overallProgress: {
     completedCount: number
@@ -39,31 +41,21 @@ type HeroProps = {
   }
 }
 
-type CardTab = 'continue' | 'revise'
-
 export function Hero({
   currentStep,
+  pathSteps,
   lastCompletedNote,
   overallProgress,
 }: HeroProps) {
   const reducedMotion = useReducedMotion()
   const motionConfig = motionProps(reducedMotion)
   const [isHeadlinePaused, setIsHeadlinePaused] = useState(false)
-  const [cardTab, setCardTab] = useState<CardTab>('continue')
   const nextNote =
     currentStep.status === 'completed'
       ? undefined
       : currentStep.nextNote ?? currentStep.firstNote
   const continueNote = nextNote ?? lastCompletedNote
   const hasProgress = overallProgress.completedCount > 0
-  const trackProgressPercent = currentStep.noteCount
-    ? Math.round((currentStep.completedCount / currentStep.noteCount) * 100)
-    : 0
-  const reviseNotes = flattenNotes(currentStep.track.topics)
-    .filter((note) => note.priority === 'Must Know')
-    .slice(0, 5)
-  const canRevise = reviseNotes.length > 0
-  const activeTab = canRevise ? cardTab : 'continue'
 
   return (
     <Wrap>
@@ -102,7 +94,7 @@ export function Hero({
               variant="accent"
             >
               {hasProgress ? 'Continue reading' : 'Start the first note'}
-              <span className="btn-arrow" aria-hidden="true">
+              <span className="relative -top-px text-[15px] leading-none" aria-hidden="true">
                 →
               </span>
             </ButtonLink>
@@ -124,84 +116,13 @@ export function Hero({
         </motion.div>
 
         <motion.aside
-          className="hero__progress"
+          className="hero__path"
           aria-label="Your learning path"
-          initial={reducedMotion ? false : { opacity: 0, y: 22 }}
-          animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1], delay: 0.4 }}
+          initial={reducedMotion ? false : { opacity: 0 }}
+          animate={reducedMotion ? undefined : { opacity: 1 }}
+          transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1], delay: 0.3 }}
         >
-          {canRevise && (
-            <div className="hero__tabs" role="tablist">
-              <button
-                aria-selected={activeTab === 'continue'}
-                onClick={() => setCardTab('continue')}
-                role="tab"
-                type="button"
-              >
-                Continue
-              </button>
-              <button
-                aria-selected={activeTab === 'revise'}
-                onClick={() => setCardTab('revise')}
-                role="tab"
-                type="button"
-              >
-                Revise
-              </button>
-            </div>
-          )}
-
-          {activeTab === 'continue' ? (
-            <>
-              <div className="hero__progress-head">
-                <span>Your path</span>
-                <span>
-                  {overallProgress.completedCount} / {overallProgress.totalCount}{' '}
-                  understood
-                </span>
-              </div>
-              <p className="hero__progress-track">
-                {currentStep.track.title}
-              </p>
-              <p className="hero__progress-note">
-                {continueNote
-                  ? `Up next: ${continueNote.title}`
-                  : 'Every track understood. Nice work.'}
-              </p>
-              <div className="hero__meter" aria-hidden="true">
-                <i style={{ width: `${trackProgressPercent}%` }} />
-              </div>
-              {continueNote && (
-                <a
-                  className="hero__progress-link"
-                  href={`/notes/${continueNote.slug}`}
-                >
-                  Continue
-                  <span aria-hidden="true">→</span>
-                </a>
-              )}
-            </>
-          ) : (
-            <>
-              <div className="hero__progress-head">
-                <span>Must-know in {currentStep.track.title}</span>
-              </div>
-              <ol className="hero__revise-list">
-                {reviseNotes.map((note) => (
-                  <li key={note.slug}>
-                    <a href={`/notes/${note.slug}`}>{note.title}</a>
-                  </li>
-                ))}
-              </ol>
-              <a
-                className="hero__progress-link"
-                href="/library?view=revise"
-              >
-                All must-know notes
-                <span aria-hidden="true">→</span>
-              </a>
-            </>
-          )}
+          <HeroConstellation steps={pathSteps} />
         </motion.aside>
       </section>
     </Wrap>

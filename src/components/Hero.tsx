@@ -94,7 +94,7 @@ export function Hero({
               variant="accent"
             >
               {hasProgress ? 'Continue reading' : 'Start the first note'}
-              <span className="btn-arrow" aria-hidden="true">
+              <span className="relative -top-px text-[15px] leading-none" aria-hidden="true">
                 →
               </span>
             </ButtonLink>

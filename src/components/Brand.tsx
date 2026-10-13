@@ -4,7 +4,7 @@ export function Brand() {
   return (
     <a
       aria-label={`${siteName} home`}
-      className="flex items-center gap-2 text-[15px] font-semibold tracking-[-0.01em] text-(--color-text)"
+      className="flex items-center gap-2 text-[15px] font-semibold tracking-[-0.01em] text-foreground"
       href="/"
     >
       <img
@@ -15,8 +15,8 @@ export function Brand() {
         width="28"
       />
       <span>
-        <span className="text-(--color-accent-text)">{siteNameLead}</span>
-        <span className="text-(--color-text)">{siteNameRest}</span>
+        <span className="text-foreground">{siteNameLead}</span>
+        <span className="text-foreground">{siteNameRest}</span>
       </span>
     </a>
   )

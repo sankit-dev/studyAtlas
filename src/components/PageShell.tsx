@@ -7,7 +7,7 @@ type PageShellProps = PropsWithChildren<{
 export function PageShell({ children, variant = 'default' }: PageShellProps) {
   return (
     <div
-      className={`min-h-svh bg-(--color-page) text-(--color-text) transition-colors duration-300 ${
+      className={`min-h-svh bg-canvas text-foreground transition-colors duration-300 ${
         variant === 'dsa' ? 'dsa-page-shell' : ''
       }`}
     >

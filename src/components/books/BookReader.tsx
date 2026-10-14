@@ -13,9 +13,11 @@ import {
   getChapterCount,
   type Book,
 } from '../../data/books'
+import { fetchChapter, type ChapterResult } from '../../lib/bookChapters'
 import { navigateTo } from '../../lib/router'
 import { signInWithGithub, useBookAccess } from './access'
-import { ChapterText } from './ChapterText'
+import { ChapterBody } from './chapter/ChapterBody'
+import { countChapterWords } from './chapter/words'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -23,7 +25,6 @@ import {
   ListIcon,
 } from './icons'
 import { ContentsDrawer, HighlightsDrawer, SettingsPanel } from './ReaderPanels'
-import { countWords, sampleBlocks } from './sampleChapter'
 import { useRevealOnScroll, useSmoothScroll } from './useReaderScroll'
 import {
   loadHighlights,
@@ -103,7 +104,13 @@ export function BookReader({ book, chapterNumber }: BookReaderProps) {
   const chapter = getChapter(book, chapterNumber)
   const total = getChapterCount(book)
   const { isSignedIn, isSubscribed } = useBookAccess()
-  const locked = Boolean(chapter && !chapter.free && !isSubscribed)
+  const metaLocked = Boolean(chapter && !chapter.free && !isSubscribed)
+  const chapterKey = `${book.slug}:${chapterNumber}`
+  const [loaded, setLoaded] = useState<{ key: string; result: ChapterResult } | null>(null)
+  const [attempt, setAttempt] = useState(0)
+  const result = loaded?.key === chapterKey ? loaded.result : null
+  const locked = metaLocked || result?.status === 'locked'
+  const doc = result?.status === 'ok' ? result.doc : null
 
   const [prefs, setPrefs] = useState<ReaderPrefs>(loadPrefs)
   const [panel, setPanel] = useState<Panel>(null)
@@ -117,8 +124,7 @@ export function BookReader({ book, chapterNumber }: BookReaderProps) {
   const settingsRef = useRef<HTMLDivElement>(null)
   const lenisRef = useSmoothScroll(panel === 'contents' || panel === 'highlights')
 
-  const blocks = sampleBlocks
-  const words = useMemo(() => countWords(blocks), [blocks])
+  const words = useMemo(() => (doc ? countChapterWords(doc) : 0), [doc])
   const minutesLeft = Math.max(1, Math.ceil((words * (1 - position)) / wordsPerMinute))
   const bookPercent = Math.round(((chapterNumber - 1 + position) / total) * 100)
 
@@ -143,9 +149,19 @@ export function BookReader({ book, chapterNumber }: BookReaderProps) {
     [book.slug, chapterNumber],
   )
 
+  // Fetch the chapter from the API; paid chapters only reach entitled readers.
+  useEffect(() => {
+    if (!chapter || metaLocked) return
+    const controller = new AbortController()
+    fetchChapter(book.slug, chapterNumber, controller.signal)
+      .then((next) => setLoaded({ key: chapterKey, result: next }))
+      .catch(() => undefined)
+    return () => controller.abort()
+  }, [book.slug, chapter, chapterKey, chapterNumber, metaLocked, attempt])
+
   // Restore where the reader left this chapter, then track scroll position.
   useEffect(() => {
-    if (locked) return
+    if (!doc) return
     const saved = loadProgress(book.slug)
     if (saved?.chapter === chapterNumber && saved.position > 0.02) {
       requestAnimationFrame(() => {
@@ -174,9 +190,9 @@ export function BookReader({ book, chapterNumber }: BookReaderProps) {
       window.clearTimeout(saveTimer)
       window.removeEventListener('scroll', onScroll)
     }
-  }, [book.slug, chapterNumber, locked, lenisRef])
+  }, [book.slug, chapterNumber, doc, lenisRef])
 
-  useRevealOnScroll(articleRef, !locked)
+  useRevealOnScroll(articleRef, Boolean(doc))
 
   // Keyboard: Esc closes, arrows move between chapters.
   useEffect(() => {
@@ -368,7 +384,11 @@ export function BookReader({ book, chapterNumber }: BookReaderProps) {
           </article>
           <section aria-label="Unlock this book" className="bk-paywall">
             <h2>Keep reading</h2>
-            <p>Subscribe to read every book.</p>
+            <p>
+              {result?.status === 'locked' && result.reason === 'signin'
+                ? 'Sign in and subscribe to read every book.'
+                : 'Subscribe to read every book.'}
+            </p>
             <a className="bk-rbtn bk-rbtn--solid bk-rbtn--lg" href="/pricing">
               Subscribe
             </a>
@@ -393,24 +413,49 @@ export function BookReader({ book, chapterNumber }: BookReaderProps) {
             onPointerUp={onSelectionEnd}
             ref={articleRef}
           >
-            <span className="bk-article__eyebrow">Chapter {chapter.number}</span>
-            <h1>{chapter.title}</h1>
-            <ChapterText
-              blocks={blocks}
-              editingNoteId={editingNoteId}
-              highlights={highlights}
-              onCancelNote={() => setEditingNoteId(null)}
-              onMarkClick={(id, rect) => {
-                if (window.getSelection()?.isCollapsed === false) return
-                setPopover({ kind: 'mark', id, rect })
-              }}
-              onSaveNote={(id, note) => {
-                updateHighlights((current) =>
-                  current.map((item) => (item.id === id ? { ...item, note } : item)),
-                )
-                setEditingNoteId(null)
-              }}
-            />
+            {doc ? (
+              <ChapterBody
+                doc={doc}
+                editingNoteId={editingNoteId}
+                highlights={highlights}
+                key={chapterKey}
+                onCancelNote={() => setEditingNoteId(null)}
+                onMarkClick={(id, rect) => {
+                  if (window.getSelection()?.isCollapsed === false) return
+                  setPopover({ kind: 'mark', id, rect })
+                }}
+                onSaveNote={(id, note) => {
+                  updateHighlights((current) =>
+                    current.map((item) => (item.id === id ? { ...item, note } : item)),
+                  )
+                  setEditingNoteId(null)
+                }}
+              />
+            ) : (
+              <>
+                <span className="bk-article__eyebrow">Chapter {chapter.number}</span>
+                <h1>{chapter.title}</h1>
+                {!result && (
+                  <div aria-label="Loading chapter" className="bk-locked-lines bk-loading-lines" role="status">
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                )}
+                {result?.status === 'missing' && (
+                  <p className="bk-reader__note">This chapter isn&rsquo;t published yet. Check back soon.</p>
+                )}
+                {result?.status === 'error' && (
+                  <div className="bk-reader__note">
+                    <p>The chapter didn&rsquo;t load. Check your connection and try again.</p>
+                    <button className="bk-rbtn" onClick={() => setAttempt((n) => n + 1)} type="button">
+                      Try again
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
           </article>
         </main>
       )}

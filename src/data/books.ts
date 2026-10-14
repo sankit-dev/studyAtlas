@@ -2,7 +2,7 @@
 // served by the API to entitled readers (see the books plan). Keep this file to
 // titles, ordering and which chapters are free.
 
-export type BookCategory = 'system-design' | 'ai'
+export type BookCategory = 'backend' | 'system-design' | 'ai'
 
 export type BookChapter = {
   number: number
@@ -27,6 +27,7 @@ export type Book = {
 
 export const bookCategories: { id: BookCategory | 'all'; label: string }[] = [
   { id: 'all', label: 'All' },
+  { id: 'backend', label: 'Backend' },
   { id: 'system-design', label: 'System design' },
   { id: 'ai', label: 'AI' },
 ]
@@ -45,6 +46,33 @@ function buildParts(parts: PartInput[], free: number[]): BookPart[] {
 }
 
 export const books: Book[] = [
+  {
+    slug: 'how-the-backend-works',
+    title: 'How the Backend Works',
+    description:
+      'Your first year as a backend engineer, one production incident at a time. For freshers and 0–1 years.',
+    category: 'backend',
+    cover: 'dark',
+    updated: 'Oct 2026',
+    parts: buildParts(
+      [
+        ['Act I · Surviving launch week', ['The Blank Screen', 'Mobile API Chaos', 'Corrupted JSON File']],
+        [
+          'Act II · The first traffic spike',
+          ['The 9-Second Page', 'Double-Booked Front Row', 'The Stolen Session'],
+        ],
+        [
+          'Act III · Going viral',
+          ['Comedian Tweet Meltdown', '12-Second Checkout', 'Single Server Ceiling'],
+        ],
+        [
+          'Act IV · Production and the payoff',
+          ['The 2 AM Mystery', 'The Waitlist Feature', 'Interview Week'],
+        ],
+      ],
+      [1],
+    ),
+  },
   {
     slug: 'system-design-interview-handbook',
     title: 'System Design Interview Handbook',

@@ -89,3 +89,23 @@ Implemented for review:
 - `NoteProgress` model
 - health route
 - note progress sync routes
+
+## Book chapters
+
+Chapter text is never in this repo. Chapters are JSON files in the private
+content repo (format: `src/components/books/chapter/types.ts`), published to
+MongoDB with:
+
+```bash
+cd server
+npm run publish:chapter -- ../../studyatlas-books/how-the-backend-works --dry-run   # check only
+npm run publish:chapter -- ../../studyatlas-books/how-the-backend-works             # publish
+```
+
+Every file is validated first; nothing is written if any file fails.
+Re-publishing replaces the chapter and bumps its revision. A chapter is free
+when its file has `"free": true` (or pass `--free=1,4`).
+
+`GET /api/books/:slug/chapters/:n` serves a chapter: free ones to anyone, paid
+ones only to signed-in readers with an active subscription (401 = sign in,
+403 = subscribe), always with `Cache-Control: private, no-store`.

@@ -5,6 +5,7 @@ import { toNodeHandler } from "better-auth/node";
 import { auth } from "./lib/auth.js";
 import { geoBlock, restrictedCountryLimits } from "./middleware/geoBlock.js";
 import { rateLimit } from "./middleware/rateLimit.js";
+import { booksRouter } from "./routes/books.js";
 import { dsaProgressRouter } from "./routes/dsaProgress.js";
 import { donationsRouter, handleDonationWebhook } from "./routes/donations.js";
 import { healthRouter } from "./routes/health.js";
@@ -77,6 +78,7 @@ export function createApp() {
   app.use(express.json({ limit: "1mb" }));
 
   app.use("/api/health", healthRouter);
+  app.use("/api/books", booksRouter);
   app.use("/api/donations", donationsRouter);
   app.use("/api/dsa/progress", dsaProgressRouter);
   app.use("/api/notes/progress", noteProgressRouter);

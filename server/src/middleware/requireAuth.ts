@@ -22,6 +22,14 @@ function getRequestHeaders(request: Request) {
   return headers
 }
 
+/** The signed-in user's id, or null. For routes open to everyone. */
+export async function getSessionUserId(request: Request) {
+  const session = await auth.api.getSession({
+    headers: getRequestHeaders(request),
+  })
+  return session?.user.id ?? null
+}
+
 export async function requireAuth(
   request: Request,
   response: Response,

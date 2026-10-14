@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Book chapters live in the private content repo, never here.
+/content/
+/book-content/
+*.chapter.json
